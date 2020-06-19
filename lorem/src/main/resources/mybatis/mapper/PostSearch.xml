@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.lorem.ipsum.dao.PostSearchDao">
+	<select id="searchByTC" resultType="com.lorem.ipsum.model.post.PostSearchModel">
+		select 
+			p_title,
+			p_contents,
+			i.p_id,
+			i.b_name,
+			i.u_id,
+			u_nick,
+			p_date
+		from post_info i, post_contents c, acc_pub p
+		where i.u_id=p.u_id and i.b_name=c.b_name and i.p_id=c.p_id and (regexp_like(p_contents, #{keywords},'i') or regexp_like(p_title, #{keywords},'i'))
+	</select>
+		<select id="searchByT" resultType="com.lorem.ipsum.model.post.PostSearchModel">
+		select 
+			p_title,
+			p_contents,
+			i.p_id,
+			i.b_name,
+			i.u_id,
+			u_nick,
+			p_date
+		from post_info i, post_contents c, acc_pub p
+		where i.u_id=p.u_id and i.b_name=c.b_name and i.p_id=c.p_id and regexp_like(p_title, #{keywords},'i')
+	</select>
+		<select id="searchByC" resultType="com.lorem.ipsum.model.post.PostSearchModel">
+		select 
+			p_title,
+			p_contents,
+			i.p_id,
+			i.b_name,
+			i.u_id,
+			u_nick,
+			p_date
+		from post_info i, post_contents c, acc_pub p
+		where i.u_id=p.u_id and i.b_name=c.b_name and i.p_id=c.p_id and regexp_like(p_contents, #{keywords},'i')
+	</select>
+		<select id="searchByN" resultType="com.lorem.ipsum.model.post.PostSearchModel">
+		select 
+			p_title,
+			p_contents,
+			i.p_id,
+			i.b_name,
+			i.u_id,
+			u_nick,
+			p_date
+		from post_info i, post_contents c, acc_pub p
+		where i.u_id=p.u_id and i.b_name=c.b_name and i.p_id=c.p_id and regexp_like(u_nick, #{keywords},'i')
+	</select>
+</mapper>

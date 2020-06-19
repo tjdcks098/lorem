@@ -1,0 +1,121 @@
+@charset "UTF-8";
+
+.bgi {
+	z-index: 50;
+	background-image: url("../source/rain_floor_water_wet_drops-1351257.jpg");
+	background-size: 100vw;
+	background-repeat: no-repeat;
+	background-attachment: local;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+	height: 65vw;
+	min-height: 550px;
+	max-height: 1000px;
+}
+
+#rain {
+	z-index: 51;
+	position: absolute;
+	opacity: 0.6;
+}
+
+#gra {
+	position: relative;
+	z-index: 52;
+	overflow: hidden;
+	bottom: 0;
+	height: 100%;
+	background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%,
+		rgba(0, 0, 0, 0) 50%, rgba(150, 150, 150, 1) 80%);
+}
+
+#dolor {
+	color: rgb(100, 100, 100);
+	z-index: 0;
+	font-size: 15em;
+	text-align: center;
+	transform: translateX(-50%);
+	left: 50%;
+	top: calc(-35px + 3vw);
+	position: relative;
+	opacity: 0.8;
+	transition: .5s;
+}
+
+#title {
+	position: relative;
+	display: inline-block;
+	transform: translateY(-55%) translateX(-50%);
+	top: 50%;
+	left: 50%;
+	font-size: 5em;
+	transition: all .5s;
+}
+
+.back {
+	position: relative;
+	transform: translateX(-50%);
+	left: 50%;
+	width: fit-content;
+	height: fit-content;
+	padding: 1px;
+	background-color: white;
+	border-radius: 13px;
+}
+
+.border {
+	position: relative;
+	margin: 5px;
+	width: 650px;
+	height: 160px;
+	border: black 5px dashed;
+	border-radius: 10px;
+	transition: .5s;
+}
+
+.con {
+	display:inline-block;
+	overflow: hidden;
+	position: fixed;
+	transform: translateX(-50%);
+	left: 50%;
+	margin-top: 140px;
+	padding: 0;
+	opacity: 0.5;
+	transition: .5s;
+}
+
+@media screen and (min-width: 650px) and (max-width: 1100px) {
+	#dolor {
+		font-size: 8em;
+		transition: .5s;
+	}
+	.bgi {
+		background-size: auto 590px;
+		transition: all .2s;
+	}
+}
+
+@media screen and (max-width: 650px) {
+	#dolor {
+		font-size: 5em;
+		transition: .5s;
+	}
+	.bgi {
+		background-size: auto 400px;
+		min-height: 400px;
+	}
+	#title {
+		font-size: 2.5em;
+		transition: all .5s;
+	}
+	.con {
+		margin-top: 130px;
+		transition: .5s;
+	}
+	.border {
+		height: 60px;
+		transition: .5s;
+	}
+}

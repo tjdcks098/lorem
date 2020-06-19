@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lorem.ipsum.dao.BoardDao">
+	<select id="getBoardInf" resultType="com.lorem.ipsum.model.BoardModel">
+		select
+			b_name
+		,	b_rlevel
+		,	b_wlevel
+		,	b_posttype
+		from board 
+		where b_name=#{name}
+	</select>
+	<select id="getBoardList" resultType="com.lorem.ipsum.model.BoardModel">
+		select
+			b_name
+		,	b_rlevel
+		,	b_wlevel
+		,	b_posttype
+		from board 
+		order by b_index
+	</select>
+</mapper>

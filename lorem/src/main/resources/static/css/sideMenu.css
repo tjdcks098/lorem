@@ -1,0 +1,109 @@
+@charset "UTF-8";
+
+.sidebar a {
+	font-size: 0.8em;
+}
+
+.sidebar {
+	overflow: hidden;
+	line-height: 1em;
+	font-size: 0.9em;
+	padding: 0;
+	margin: 0;
+	z-index: 199;
+	position: fixed;
+	right: 0%;
+	top: 50%;
+	border-radius: 10px 0 0 10px;
+	border: 0;
+	background-color: rgb(200, 200, 200);
+	width: 20px;
+	height: 120px;
+	transition: opacity .4s, width .4s;
+	opacity: 0.8;
+}
+
+.sidebar:hover {
+	opacity: 1;
+	width: 60px;
+	transition: opacity .4s, width .4s;
+}
+
+#sb_outter {
+	display: flex;
+	position: relative;
+	top: 10px;
+	left: 5px;
+	height: 100px;
+	width: 23px;
+	opacity: 1;
+	transition: opacity 0.2s;
+}
+
+.sidebar:hover #sb_outter {
+	opacity: 0;
+	transition: opacity 0.2s;
+}
+
+#sb_outter p {
+	padding: 0;
+	margin: 0;
+	text-align: center;
+	position: relative;
+	top: 8px;
+}
+
+#sb_upbtn {
+	position: absolute;
+	top: 10px;
+	left: 5px;
+	width: 50px;
+	height: 20px;
+}
+
+#sb_dnbtn {
+	position: absolute;
+	bottom: 10px;
+	left: 5px;
+	width: 50px;
+	height: 20px;
+}
+
+#sb_bkbtn {
+	position: absolute;
+	top: 48px;
+	left: -5px;
+	width: 45px;
+	height: 20px;
+	transform: rotate(90deg);
+}
+
+#sb_frbtn {
+	position: absolute;
+	top: 48px;
+	left: 25px;
+	transform: rotate(90deg);
+	width: 45px;
+	height: 20px;
+}
+
+.nomp {
+	margin: 0;
+	padding: 0;
+}
+
+.sb_btn {
+	overflow: hidden;
+	display: none;
+	font-size: 0.9em;
+	text-align: center;
+	text-overflow: clip;
+	opacity: 0;
+	transition: opacity 0.2s;
+	cursor: pointer;
+}
+.sidebar:hover .sb_btn {
+	display: inline-block;
+	opacity: 1;
+	transition: opacity 0.2s;
+}

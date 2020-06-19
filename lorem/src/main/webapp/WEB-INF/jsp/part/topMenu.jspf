@@ -1,0 +1,57 @@
+
+<%@page import="com.lorem.ipsum.model.logon.UserModel"%>
+<%@page import="com.lorem.ipsum.commons"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%
+UserModel user=null;
+	String str = "";
+if (request.getRequestURL().indexOf("welcome")!=-1)
+	str = "><input type='checkbox' id='toggleRain' onclick='tgRain(this)''><label for='toggleRain'></label";
+%>
+<link rel="stylesheet" href="../css/topMenu.css">
+
+<div class="toptool">
+	<ul>
+
+		<li class="rain_btn" <%=str%>></li>
+		<li class="home_btn"><a href="<%=commons.baseUrl%>welcome"><b>HOME</b></a></li>
+		
+
+		<%
+			
+			if (session.getAttribute("user") == null) {
+		%>
+		<li class="login_btn"><a href="<%=commons.baseUrl%>login"><b>Login</b></a></li>
+		<%
+			} else {
+				user=(UserModel)session.getAttribute("user");
+		%>
+		<li class="login_btn"><a href="<%=commons.baseUrl%>logout"><b>Logout</b></a></li>
+		<li class="info"><a href="../info"><b style="color: #b0b0b0;">"<%=user.getU_nick()%>"
+		</b></a></li>
+		<%
+			}
+		%>
+	</ul>
+</div>
+<%
+	if (request.getRequestURL().indexOf("welcome")!=-1){
+%>
+<div class="rain_option">
+	<p>Rain ▼</p>
+	<ul>
+		<li><input id="ro_auto" type="checkbox" checked="checked" onchange="autotg()"><label for="ro_auto">&nbsp;&nbsp;Auto</label><%=user!=null&&user.getU_level()<3?"&nbsp;&nbsp;<input id='debug' type='checkbox' onchange='debugtg()'><label for='debug'>&nbsp;&nbsp;Debug</label>":""%> </li>
+		<li><p>The number of Drop</p><input type="range" id="numDrop" min=1 max=250  disabled="disabled" oninput="ndc(this)"><br><input type='text' class="opin" id="numDroptx"  disabled="disabled" onchange="ndc(this)"></li>
+		<li><p>Drop Angle</p><input type="range" id="dropAngle" min=-500 max=500  disabled="disabled" oninput="dac(this)"><br><input type='text' class="opin" id="dropAngletx" disabled="disabled" onchange="dac(this)"></li>
+		<li><p>FPS</p><input type="range" id="fps" min=1 max=120 oninput="fpss(this)" value=60><br><input type='text' class="opin" id="fpstx" value=60 onchange="fpss(this)"></li>
+		
+	</ul>
+</div>
+<%
+	}
+%>
+
+
+
+

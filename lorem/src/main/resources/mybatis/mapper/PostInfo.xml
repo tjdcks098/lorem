@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.lorem.ipsum.dao.PostInfoDao">
+	<select id="getMyPost" resultType="com.lorem.ipsum.model.post.PostInfoModel">
+		select
+			p_title
+		,	p_view
+		,	p_lock
+		,	p_date
+		,	p_id
+		,	p_update
+		,	p_like
+		,	b_name
+		from post_info
+		where u_id=#{u_id}
+	</select>
+
+
+
+	<update id="editPost" statementType="CALLABLE">
+		{
+		call editPost(
+		#{p_id}
+		,#{b_name}
+		,#{title}
+		)
+		}
+	
+	</update>
+
+
+	<insert id="delPost">
+	{
+		call del_post(
+		#{u_id}
+		,#{p_id}
+		,#{b_name}
+		)
+		
+	}
+	</insert>
+	<insert id="addView"
+		statementType="CALLABLE">
+		{
+		call VIEW_COUNT(
+			#{p_id}
+		, #{b_name}
+		)
+		}
+	</insert>
+	<insert id="addLike"
+		statementType="CALLABLE">
+		{
+		call LIKE_PROC(
+		#{u_id}
+		, #{p_id}
+		, #{b_name}
+		)
+		}
+	</insert>
+	<insert id="subLike"
+		statementType="CALLABLE">
+		{
+		call UNLIKE_PROC(
+		#{u_id}
+		, #{p_id}
+		, #{b_name}
+		)
+		}
+	</insert>
+	<select id="getPostCount" resultType="string">
+		select
+			count(*)
+		from post_info
+		where b_name = #{b_name}
+	</select>
+	 
+	<insert id="getPostInfo" parameterType="com.lorem.ipsum.model.post.PostInfoModel" statementType="CALLABLE">
+		{
+		call getPostInfo(
+			#{p_title, mode=OUT, jdbcType=VARCHAR}
+			,#{p_view, mode=OUT, jdbcType=VARCHAR}
+			,#{u_id, mode=OUT, jdbcType=VARCHAR}
+			,#{ u_nick, mode=OUT, jdbcType=VARCHAR}
+			,#{ p_date, mode=OUT, jdbcType=VARCHAR}
+			,#{ p_id, mode=IN, jdbcType=NUMERIC}
+			,#{ p_update, mode=OUT, jdbcType=VARCHAR}
+			,#{ p_like, mode=OUT, jdbcType=VARCHAR}
+			,#{ b_name, mode=IN, jdbcType=VARCHAR}
+			,#{ hasNext, mode=OUT, jdbcType=VARCHAR }
+			,#{ hasPrev, mode=OUT, jdbcType=VARCHAR }
+			
+		)
+		
+		}
+	</insert>
+	
+	<select id="getPostList" resultType="com.lorem.ipsum.model.post.PostInfoModel">
+	select *
+	from
+	(
+		select
+		p_title
+		, p_view
+		, p_lock
+		, p.u_id
+		, u_nick
+		, p_date
+		, p_id
+		, p_update
+		, p_like
+		,b_name
+		from post_info p, acc_pub a
+		where b_name=#{b_name} and a.u_id=p.u_id
+		order by p_id desc
+	)
+	<![CDATA[where rownum >= (#{pageNum}-1)*20 and rownum < (#{pageNum})*20 ]]>
+	</select>
+	<select id="newPost" parameterType="com.lorem.ipsum.model.post.PostInfoModel" resultType="com.lorem.ipsum.model.post.PostInfoModel" statementType="CALLABLE">
+	{
+		call newpost(
+		#{p_title},
+		#{u_id},
+		#{b_name},
+		#{p_id, mode=INOUT, jdbcType=INTEGER }
+		)
+	}
+	</select>
+</mapper>
+
+
+
+

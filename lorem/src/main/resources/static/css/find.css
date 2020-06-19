@@ -1,0 +1,121 @@
+@charset "UTF-8";
+
+input:focus {
+	outline: none;
+}
+#con{
+	text-align: center;
+}
+#con ul{
+	text-align: left;
+}
+#main_contents ul {
+	list-style: none;
+	text-align: left;
+	display: inline;
+	position: relative;
+}
+
+#fid ul li:last-child,#fpw ul li:last-child{
+	margin-bottom:30px;
+}
+#fid ul li:first-child,#fpw ul li:first-child{
+	text-align: center;
+	font-size: 1.2em;
+}
+#main_contents li:first-child h1 {
+	font-size: 3em;
+}
+
+#main_contents li:nth-child(2) b {
+	font-size: 2em;
+}
+
+#con {
+	background-color: rgb(200, 200, 200);
+	border-radius: 40px;
+	margin: auto;
+	width: fit-content;
+	padding: 30px 30px 30px 30px;
+	box-shadow: 15px 30px 20px 5px rgb(50, 50, 50);
+}
+
+.topspace {
+	height: calc(10vw + 5vh);
+	min-height: 60px;
+	max-height: 180px;
+}
+
+#next_btn {
+	float: right;
+	background-color: rgb(250, 250, 250);
+	border: 0;
+	width: 150px;
+	height: 52px;
+	transition: all .5s;
+	margin: 5px 10px 10px 10px;
+	cursor: pointer;
+	border-radius: 50px;
+	box-shadow: 0 10px 0 0 rgb(150, 150, 150);
+	transition: all .3s;
+}
+
+#next_btn:hover {
+	margin-top: 7px;
+	box-shadow: 0 8px 0 0 rgb(150, 150, 150);
+}
+
+#next_btn:active {
+	background-color: rgb(230, 230, 230);
+	margin-top: 13px;
+	box-shadow: 0 2px 0 0 rgb(150, 150, 150);
+	transition: all .05s;
+}
+
+#fid, #fpw {
+	padding: 15px;
+	border: 3px dashed gray;
+	border-radius: 20px;
+	font-size: 1.2em;
+}
+
+#fid {
+	margin-bottom: 25px;
+}
+
+#fid input, #fpw input, select {
+	display: inline-block;
+	font-size: 0.8em;
+	border: 0;
+	border-radius: 20px;
+	padding: 5px;
+	transition: all .05s;
+}
+#fid input[type="submit"], 
+#fpw input[type="submit"],
+#fid input[type="button"], 
+#fpw input[type="button"] {
+	font-weight:bold;
+	padding: 8px 30px;
+	margin:0 20px;
+}
+
+#fid li, #fpw li {
+	margin-bottom: 10px;
+}
+
+.fid_eml, .fid_emladd, .fid_e {
+	width: calc(30% - 8px);
+}
+
+@media screen and (max-width: 650px) {
+	#con {
+		padding: 20px 10px 10px 10px;
+	}
+	#main_contents li:first-child h1 {
+		font-size: 1.8em;
+	}
+	#main_contents li:nth-child(2) b {
+		font-size: 1.4em;
+	}
+}

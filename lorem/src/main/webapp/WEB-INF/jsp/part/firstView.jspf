@@ -1,0 +1,27 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+    
+<link rel="stylesheet" href="../css/firstView.css">
+<script src="../js/rain.js"></script>
+    
+	<div class="bgi">
+		<canvas id="rain" width="2560px" height="1000px"></canvas>
+		<script>
+			init();
+		</script>
+		<div class="con">
+			<div class="back">
+				<div class="border">
+					<div id="title">
+						<b>LOREM IPSUM</b>
+					</div>
+				</div>
+			</div>
+			<div id="dolor">
+				<b>dolor</b>
+			</div>
+		</div>
+		<div id="gra"></div>
+
+	</div>

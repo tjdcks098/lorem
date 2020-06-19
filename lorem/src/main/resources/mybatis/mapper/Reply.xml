@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.lorem.ipsum.dao.ReplyDao">
+	<select id="getMyReply" resultType="com.lorem.ipsum.model.post.ReplyModel">
+		select
+			contents
+		,	u_id
+		,	r_date
+		,	r_lock
+		,	r_like
+		,	r_index
+		,	b_name
+		,	p_id
+		from reply
+		where u_id=#{u_id}
+	</select>
+
+	<insert id="likeReply">
+		insert into like_reply
+		values(
+		  #{p_id}
+		, #{b_name}
+		, #{r_index}
+		, to_char(sysdate, 'YY/MM/DD')||
+			to_char(sysdate,' HH24:')||
+			to_char(sysdate,'MI:')||
+			to_char(sysdate,'ss')
+		, #{u_id})
+	</insert>
+	<delete id="unlikeReply">
+		delete from like_reply
+		where p_id=#{p_id}
+		and b_name=#{b_name}
+		and r_index=#{r_index}
+		and u_id= #{u_id}
+	</delete>
+	<insert id="del">
+		delete from reply
+		where r_index=#{r_index} and p_id=#{p_id} and b_name= #{b_name}
+	
+	</insert>
+	<select id="getLikedReplies" resultType="_integer">
+		select r.r_index
+		from reply r, like_reply l
+		where r.p_id=l.p_id
+		and r.b_name=l.b_name
+		and r.r_index=l.r_index
+		and l.u_id=#{u_id}
+		and r.p_id=#{p_id}
+		and r.b_name=#{b_name}
+	
+	</select>
+	
+	<select id="getReply"
+		resultType="com.lorem.ipsum.model.post.ReplyModel">
+		select
+		contents
+		, r.u_id
+		, r_date
+		, r_lock
+		, r_like
+		,	u_nick
+		,r_index
+		from reply r, acc_pub a
+		where p_id = #{p_id} and b_name=#{b_name}
+		and r.u_id=a.u_id
+		and r_index = #{r_index}
+	</select>
+	
+	<select id="getPostReplies"
+		resultType="com.lorem.ipsum.model.post.ReplyModel">
+		select
+		contents
+		,	r.u_id
+		, r_date
+		, r_lock
+		, r_like
+		,	u_nick
+		,r_index
+		from reply r, acc_pub a
+		where p_id = #{p_id} and r.u_id=a.u_id and r.b_name=#{b_name}
+		order by r_index
+	</select>
+	<insert id="submit">
+		insert into reply
+		(p_id, contents, u_id, b_name)
+		values(
+			#{p_id}
+		,	#{contents}
+		,	#{u_id}
+		,   #{b_name}
+		)
+	</insert>
+</mapper>
+	
+	
+	
+
+

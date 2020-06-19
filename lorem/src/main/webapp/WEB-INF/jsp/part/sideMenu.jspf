@@ -1,0 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<link rel="stylesheet" href="../css/sideMenu.css">
+<div class="sidebar">
+	<div id="sb_outter">
+		<p>
+			<b>&lt;</b><br>O<br>P<br>E<br>N
+		</p>
+	</div>
+	<a class="nomp sb_btn" id="sb_upbtn" href="#top">▲Top</a> <a
+		class="nomp sb_btn" id="sb_dnbtn" href="#bot">▼Bottom</a> <a
+		class="nomp sb_btn" id="sb_bkbtn" onclick="history.back()">▼Back</a> <a
+		class="nomp sb_btn" id="sb_frbtn" onclick="history.go(1)">▲Front</a>
+</div>

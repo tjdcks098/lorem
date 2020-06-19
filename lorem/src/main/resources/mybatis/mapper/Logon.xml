@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lorem.ipsum.dao.LogonDao">
+
+	<update id="editInfo">
+		update acc_pri 
+		set u_phnum=#{u_phnum}, u_email=#{u_email} 
+		where u_id=#{u_id}
+		update acc_pub
+		set u_nick=#{u_nick}, u_intro=#{u_intro}
+		where u_id=#{u_id}
+	</update>
+	<update id="changePw">
+		update acc_pri 
+		set u_pw=#{new_pw}
+		where u_id=#{u_id}
+	</update>
+	<select id="getUserInfo" resultType="com.lorem.ipsum.model.logon.UserInfoModel">
+		select 
+			u.u_id
+		,	u_nick
+		,	u_email
+		,	u_phnum
+		,	u_intro
+		,	u_name
+		,	u_birth
+		,	u_joindate
+		,	u_level
+		from acc_pub u, acc_pri r, acc_inf i
+		where u.u_id=r.u_id and r.u_id=i.u_id and u.u_id=#{u_id}
+	</select>
+	
+	
+	<insert id="findId" parameterType="com.lorem.ipsum.model.logon.UserFindModel" statementType="CALLABLE">
+		{
+		call findid(
+		#{u_name},
+		#{u_email},
+		#{u_id, mode=OUT, jdbcType=VARCHAR}
+		
+		)
+		}
+	</insert>
+	
+	
+	<insert id="findPw" parameterType="com.lorem.ipsum.model.logon.UserFindModel" statementType="CALLABLE">
+		{
+		call findpw(
+		#{u_id},
+		#{u_name},
+		#{u_email},
+		#{u_pw, mode=OUT, jdbcType=VARCHAR},
+		#{find_hint, mode=OUT, jdbcType=VARCHAR}
+		)
+		}
+	</insert>
+	
+	<insert id="join" parameterType="com.lorem.ipsum.model.logon.JoinModel" statementType="CALLABLE">
+		{
+			call join(
+				#{u_id},
+				#{u_pw},
+				#{u_nick},
+				#{u_name},
+				#{find_hint},
+				#{u_email},
+				#{u_phnum},
+				#{u_birth},
+				#{reval, mode=OUT, jdbcType=VARCHAR}
+			)
+		}
+	</insert>
+
+
+	<select id="isIdDuple" resultType="string">
+		select case 
+		when count(*)=0 then 'true'
+		else 'duple' end
+		from acc_pub
+		where u_id=#{u_id}
+		
+	</select>
+		<select id="isNickDuple" resultType="string">
+		select case 
+		when count(*)=0 then 'true'
+		else 'duple' end
+		from acc_pub
+		where u_nick=#{u_nick}
+		
+	</select>
+	<select id="login" parameterType="com.lorem.ipsum.model.logon.LoginModel" resultType="com.lorem.ipsum.model.logon.LoginModel" statementType="CALLABLE">
+		{
+		call login(
+			#{pw }
+		, 	#{u_id}
+		,	#{u_nick, mode=OUT, jdbcType=VARCHAR}
+		,	#{u_session, mode=OUT, jdbcType=VARCHAR}
+		,	#{u_level, mode=OUT, jdbcType=NUMERIC}
+		)}
+	</select>
+	<update id="logout" parameterType="com.lorem.ipsum.model.logon.UserCheckModel" 
+		statementType="CALLABLE">
+		{
+		call logout(
+		#{u_id}
+		, #{u_session}
+		)
+		}
+	</update>
+	<select id="checkLogon" parameterType="com.lorem.ipsum.model.logon.UserCheckModel"  resultType="com.lorem.ipsum.model.logon.UserCheckModel"
+		statementType="CALLABLE">
+		{
+		call CON_CHECK(
+		#{u_id}
+		, #{u_session}
+		, #{msg, mode = OUT, jdbcType=VARCHAR}
+		)
+		}
+	</select>
+</mapper>

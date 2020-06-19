@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lorem.ipsum.dao.PostContentsDao">
+	<select id="hasClip" resultType="string">
+		select 
+			case when count(*)>0 then 'true'
+			else 'false' end as hasClip
+		from post_clip
+		where p_id=#{p_id} and b_name = #{b_name} and f_type='file'
+	
+	</select>
+	<select id="hasImg" resultType="string">
+		select 
+			case when count(*)>0 then 'true'
+			else 'false' end as hasClip
+		from post_clip
+		where p_id=#{p_id} and b_name = #{b_name} and f_type!='file'
+	
+	</select>
+
+
+	<insert id="delFile">
+		{
+		call delFile(
+		#{p_id}
+		,#{b_name}
+		,#{f_url}
+		)
+		}
+	</insert>
+
+
+	<update id="editContents" statementType="CALLABLE">
+	{
+	call editcontents(
+		#{p_id}
+		,#{b_name}
+		,#{p_contents}
+	)
+	}
+	
+	</update>
+
+
+	<select id="getContents" resultType="com.lorem.ipsum.model.post.PostContentsModel">
+		select p_contents, p_id, b_name
+		from post_contents
+		where p_id = #{p_id} and b_name= #{b_name}
+	</select>
+
+	<select id="getFiles" resultType="com.lorem.ipsum.model.post.PostFileModel">
+		select f_name, f_url, f_type
+		from post_clip
+		where p_id = #{p_id} and b_name= #{b_name}
+		order by f_type
+	</select>
+	
+	<update id="setContents">
+		update post_contents
+		set p_contents = #{p_contents}
+		where p_id=#{p_id} and b_name=#{b_name}
+	</update>
+	
+	<insert id="addFile">
+	insert into post_clip
+	values(#{p_id},#{f_name},#{f_url},#{b_name},#{type})
+	</insert>
+	
+	<select id="isLike" resultType="_int">
+	select count(*)
+	from like_post
+	where u_id=#{u_id} and b_name=#{b_name} and p_id=#{p_id} 
+	
+	</select>
+	
+	
+	<select id="getFile" resultType="com.lorem.ipsum.model.post.PostFileModel">
+	select f_name, f_url, f_type
+	from post_clip
+	where p_id=#{p_id} and b_name=#{b_name} and f_name=#{f_name} and f_type like (#{f_type}||'%')
+	</select>
+</mapper>
