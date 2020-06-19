@@ -104,7 +104,7 @@ if (errMsg == null) {
 										"style='color:#707070'" 
 										: ("onclick=\"location.href=\'" + commons.baseUrl + "post?&name=" + URLEncoder.encode(boardName, "utf-8")
 													+ "&postId=" + postList.get(i).getP_id() + "&view=new\'\""))%> 
-							class="post" 
+							class="<%=type!=null&&type.equals("noContents")?"postNoContents":"post" %>" 
 							title='<%=(type!=null&&type.equals("noContents"))?"":("\""+postList.get(i).getP_title() 
 								+ (postList.get(i).getP_lock().equals("y") ? "*잠긴글*" : "")+"\"로 이동")%>'>
 						
