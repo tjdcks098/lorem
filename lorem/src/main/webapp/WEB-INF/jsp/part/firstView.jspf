@@ -7,9 +7,6 @@
     
 	<div class="bgi">
 		<canvas id="rain" width="2560px" height="1000px"></canvas>
-		<script>
-			init();
-		</script>
 		<div class="con">
 			<div class="back">
 				<div class="border">

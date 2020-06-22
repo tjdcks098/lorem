@@ -21,6 +21,7 @@
 		let		wave = new Array(rain_max);// 파장 프레임
 		let		wave_size = new Array(rain_max);// 회면 너비에 따른 파장 크기
 		let		win_width;// 창 너비
+		let		can_height;
 		let		canvas;// 캔버스
 		let		step=new Array(rain_max);// 현 단계
 		let		tilt_curr=(Math.random()-0.5)*0.3;// 기울기
@@ -99,6 +100,18 @@
 				$('#dropAngletx').val(t);
 			}
 		}
+		
+		$(window).resize(function(){
+			can_height=document.getElementById('gra').clientHeight;
+			win_width=Math.floor(window.innerWidth+5);
+			end_line_max=Math.floor(can_height-150);
+		});
+		$(document).ready(function(){
+			can_height=document.getElementById('gra').clientHeight;
+			win_width=Math.floor(window.innerWidth+5);
+			end_line_max=Math.floor(can_height-150);
+			init();
+		});
 		function init(){
 			for(let i=0; i<rain_max; i++)step[i]=0;
 			for(let i=0; i<6; i++)c[i]=0;
@@ -147,10 +160,9 @@
 		function adapt(){
 			fCount++;
 			if(fCount>720000)fCount=0;
-			win_width=Math.floor(window.innerWidth+5);
-			end_line_max=Math.floor(document.getElementById('gra').clientHeight-150);
+
 			draw=fCount%(120/fps)<1?true:false;
-			if(draw)canvas.clearRect(0,0,win_width, document.getElementById('gra').clientHeight);
+			if(draw)canvas.clearRect(0,0,win_width, can_height);
 			if(work&&isAuto){
 				if(tilt_count<tilt_change_term){
 					lt= tilt_change_term - tilt_count;
@@ -291,79 +303,80 @@
 			return "100,255,255";
 		}
 
-		function drop(a){
+		function drop(xx,yy,d,el,a){
 			if(step[a]==2){
 				if(draw){
 					canvas.save();
 					if(debugBool)canvas.strokeStyle="rgb("+debugcolor(a)+")";
-					canvas.lineWidth=Math.floor(4*distance[a])+1;
+					canvas.lineWidth=Math.floor(4*d)+1;
 					canvas.beginPath();
 					canvas.moveTo(cx[a],cy[a]);
 				}
-				cx[a]+=dx[a];
-				cy[a]+=dy[a];
-				if(cy[a]>=end_line[a])
+				cx[a]+=xx;
+				cy[a]+=yy;
+				if(cy[a]>=el)
 				{
 					step[a]=3;
 					
-					cx[a]-=dx[a]*(cy[a]-end_line[a])/dy[a];
-					cy[a]=end_line[a];
+					cx[a]-=xx*(cy[a]-el)/dy[a];
+					cy[a]=el;
 				}
 				if(draw){
-					if(cy[a]+ dy[a]>end_line[a])
-						canvas.lineTo(cx[a]+ dx[a]*(end_line[a]-cy[a])/dy[a], end_line[a]);
+					ncx=cx[a]+ xx
+					ncy=cy[a]+ yy
+					if(ncy>el)
+						canvas.lineTo(cx[a]+ xx*(el-cy[a])/yy, el);
 					else{
-						canvas.lineTo(cx[a]+ dx[a], cy[a]+ dy[a]);
+						canvas.lineTo(ncx, ncy);
 					}
 					canvas.stroke();
 					canvas.restore();
 				}
 			}
-			if(cy[a]+ dy[a]>end_line[a]||step[a]==3)
-			fwave(cx[a]+ dx[a]*(end_line[a]-cy[a])/dy[a], end_line[a], a);
+			if(step[a]==3||cy[a]+ yy>el){
+				if(cy[a]==el)
+					fwave(cx[a], el ,wave_size[a],wave[a],d, a);
+				else
+					fwave(cx[a]+ xx*(el-cy[a])/yy, el ,wave_size[a],wave[a],d, a);
+			}
 		}
 		
-		function fwave(x,y,a){
-			let w2=wave[a]-3;
-			let w3=w2-5;
-			let ex=Math.pow(wave_size[a]*wave[a],0.8)*2;
-			let ex2=Math.pow(wave_size[a]*w2,0.8)*2;
-			let ex3=Math.pow(wave_size[a]*w3,0.8)*2;
+		function fwave(x,y,ws,w,d,a){
+			let w2=w-5;
+			let w3=w2-12;
 			if(draw){
-				if(wave[a]<31){
-					canvas.save();
-					
-					if(debugBool)canvas.strokeStyle= "rgba("+debugcolor(a)+","+Math.pow((30-wave[a])/30,2)+")";
-					else canvas.strokeStyle= "rgba(255,255,255,"+Math.pow((30-wave[a])/30,2)+")";
-					canvas.lineWidth=Math.floor(distance[a]*(10/wave[a]))+1;
-						canvas.scale(1,0.26);
-						canvas.beginPath();
-						canvas.arc(x,y*3.84,ex,0,2*Math.PI);
-						canvas.stroke();
-						canvas.restore();
+				canvas.save();
+				canvas.scale(1,0.25);
+				if(debugBool)canvas.strokeStyle= "rgba("+debugcolor(a)+","+(w<30?(30-w)/30:0.04)+")";
+				else canvas.strokeStyle= "rgba(255,255,255,"+(w<30?(30-w)/30:0.04)+")";
+				if(w<31){
+					let ex=Math.pow(ws*w,0.8)*2;
+					//if(debugBool)canvas.strokeStyle= "rgba("+debugcolor(a)+","+(30-w)/30+")";
+					//else canvas.strokeStyle= "rgba(255,255,255,"+(30-w)/30+")";
+					canvas.lineWidth=Math.floor(d*(10/w))+1;
+					canvas.beginPath();
+					canvas.arc(x,y*4,ex,0,6.3);
+					canvas.stroke();
 				}
 				if(w2>0&&w2<31){
-					canvas.save();
-					if(debugBool)canvas.strokeStyle= "rgba("+debugcolor(a)+","+Math.pow((30-w2)/30,2)+")";
-					else canvas.strokeStyle= "rgba(255,255,255,"+Math.pow((30-w2)/30,2)+")";
-					canvas.lineWidth=Math.floor(distance[a]*(10/w2))+1;
-					canvas.scale(1,0.26);
+					let ex2=Math.pow(ws*w2,0.8)*2;
+					//if(debugBool)canvas.strokeStyle= "rgba("+debugcolor(a)+","+(30-w2)/30+")";
+					//else canvas.strokeStyle= "rgba(255,255,255,"+(30-w2)/30+")";
+					canvas.lineWidth=Math.floor(d*(10/w2))+1;
 					canvas.beginPath();
-					canvas.arc(x,(y-(5/w2)*distance[a]*distance[a])*3.84,ex2,0,2*Math.PI,true);
+					canvas.arc(x,(y-(5/w2)*d*d)*4,ex2,0,6.3,true);
 					canvas.stroke();
-					canvas.restore();
 				}
 				if(w3>0){
-					canvas.save();
-					if(debugBool)canvas.strokeStyle= "rgba("+debugcolor(a)+","+Math.pow((30-w3)/35,2)+")";
-					else canvas.strokeStyle= "rgba(255,255,255,"+Math.pow((30-w3)/35,2)+")";
-					canvas.lineWidth=Math.floor(distance[a]*(3/w3))+1;
-					canvas.scale(1,0.26);
+					let ex3=Math.pow(ws*w3,0.8)*2;
+					//if(debugBool)canvas.strokeStyle= "rgba("+debugcolor(a)+","+(30-w3)/30+")";
+					//else canvas.strokeStyle= "rgba(255,255,255,"+(30-w3)/30+")";
+					canvas.lineWidth=Math.floor(d*(3/w3))+1;
 					canvas.beginPath();
-					canvas.arc(x,y*3.84,ex3,0,2*Math.PI,true);
+					canvas.arc(x,y*4,ex3,0,6.3,true);
 					canvas.stroke();
-					canvas.restore();
 				}
+				canvas.restore();
 			}
 			if(w3>31)step[a]=4;
 			wave[a]+=0.5;
@@ -417,7 +430,7 @@
 				for(let i=0; i<rain_max; i++){
 				switch(step[i]){
 					case 0:// 초기화
-					if(i>rain_num)break;
+					if(i>=rain_num)break;
 					reset(i);
 					break;
 					case 1:// 딜레이
@@ -425,7 +438,7 @@
 					break;
 					case 2:// 내리기
 					case 3:// 파장
-					drop(i);
+					drop(dx[i], dy[i], distance[i], end_line[i], i);
 					break;
 					case 4:// 멈춤
 					stop(i);
