@@ -114,7 +114,7 @@ ArrayList<PostSearchModel> searchResult = (ArrayList<PostSearchModel>) request.g
 								pt=pt.substring(0, sh.get(k))+"<span class='hl'>"+pt.substring(sh.get(k), eh.get(k))+"</span>"+pt.substring(eh.get(k));
 							}
 							
-							if(target.equals("0")||target.equals("2")){
+							if(pc!=null&&(target.equals("0")||target.equals("2"))){
 								ArrayList<Integer> skey=new ArrayList<Integer>();
 								ArrayList<Integer> ekey=new ArrayList<Integer>();
 								ArrayList<Integer> sh=new ArrayList<Integer>();
@@ -175,7 +175,7 @@ ArrayList<PostSearchModel> searchResult = (ArrayList<PostSearchModel>) request.g
 								}
 								pc=r;
 							}
-							if(pc.indexOf("<span class='hl'>")==-1){
+							if(pc!=null&&pc.indexOf("<span class='hl'>")==-1){
 								css="text-overflow:ellipsis; overflow: hidden;white-space: nowrap;";
 
 							}
@@ -211,7 +211,9 @@ ArrayList<PostSearchModel> searchResult = (ArrayList<PostSearchModel>) request.g
 						<p class="postTitle" style="text-overflow: clip; white-space: normal;">
 							<span style="margin-top:3px; font-size:0.8em; font-weight: normal;"><%=searchResult.get(i).getB_name()%> > </span><%=pt%>
 						</p>
+						<%if(pc!=null){ %>
 						<p style="font-size:0.8em; word-break:break-all; <%=css%>"><%=pc%></p>
+						<%} %>
 						<p class="postWriter"  style="display: inline-block;"><%=(searchResult.get(i).getU_nick().length() > 7 ? searchResult.get(i).getU_nick().substring(0, 5) + "..."
 							: pu) + "(" + searchResult.get(i).getU_id().substring(0, 3) + "***)"%></p>
 						<div class="postInfo" style="display: inline-block; float:right; margin-top:0;">

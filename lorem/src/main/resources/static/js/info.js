@@ -37,6 +37,7 @@ function getMyReply(){
 		url:"../info/getMyReply",
         type : "POST",
         success: function(data){
+        	console.log(data);
         	if(data.length==0){
         		$("#myReplyList").html("작성한  댓글이 없습니다.");
         		return;

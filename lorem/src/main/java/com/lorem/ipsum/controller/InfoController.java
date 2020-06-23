@@ -121,6 +121,7 @@ public class InfoController {
 			return ResponseEntity.badRequest().body(e);
 		}
 		UserModel user=(UserModel)session.getAttribute("user");
+		System.out.println(type);
 		if(type.equals("Post")) {
 			return ResponseEntity.ok(postInfoService.getMyPost(user.getU_id()));
 		}else {
