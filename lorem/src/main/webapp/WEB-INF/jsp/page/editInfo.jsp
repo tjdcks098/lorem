@@ -23,7 +23,7 @@ String u_intro = (String) request.getAttribute("u_intro");
 
 <script>
 function sm(){
-	if($('#nkck').val()=="false"){
+	if($("#u_nick").val().equals('<%=u_nick%>')&&$('#nkck').val()=="false"){
 		alert("닉네임 중복 확인을 해 주세요.");
 		return false;
 	}else if($('#u_email').val().match(/.+@.+\..+/)==null){
