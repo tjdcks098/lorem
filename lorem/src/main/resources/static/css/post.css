@@ -1,5 +1,11 @@
 @charset "UTF-8";
 
+.userIntro:hover{
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+
 #boardInfo {
 	position: absolute;
 	top: 20px;

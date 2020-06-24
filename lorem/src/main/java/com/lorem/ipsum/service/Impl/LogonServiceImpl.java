@@ -130,4 +130,9 @@ public class LogonServiceImpl implements LogonService {
 		logonDao.editInfoPri( u_id, u_email, u_phnum);
 		logonDao.editInfoPub( u_id,u_nick, u_intro);
 	}
+
+	@Override
+	public String getIdBtNick(String u_nick) {
+		return logonDao.getIdByNick(u_nick);
+	}
 }

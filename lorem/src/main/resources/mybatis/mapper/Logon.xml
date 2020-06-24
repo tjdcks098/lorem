@@ -3,6 +3,11 @@
 
 <mapper namespace="com.lorem.ipsum.dao.LogonDao">
 
+	<select id="getIdByNick" resultType="string">
+		select u_id
+		from acc_pub
+		where u_nick=#{u_nick}
+	</select>
 	<update id="editInfoPri">
 		update acc_pri 
 		set u_phnum=#{u_phnum}, u_email=#{u_email} 

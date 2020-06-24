@@ -351,7 +351,11 @@ function replyOverflow(){
 								onclick="delconfirm()">
 						</div>
 						<p id="contentInfo">
-							<span style="color:#000; font-weight: bold;"><%=nick%>(<%=postInfo.getU_id().substring(0, 3) + "***"%>)</span>
+						<%if(userck!=null&&userck.getU_id().equals(postInfo.getU_id())) {%>
+							<span style="color:#000; font-weight: bold;"><a  class="userIntro" title="내 개인정보 조회" href="../info"><%=nick%>(<%=postInfo.getU_id().substring(0, 3) + "***"%>)</a></span>
+						<%}else{ %>
+							<span style="color:#000; font-weight: bold;"><a  class="userIntro" title="'<%=nick%>'의 소개글과 작성글 조회" href="../intro?&nick=<%=nick%>"><%=nick%>(<%=postInfo.getU_id().substring(0, 3) + "***"%>)</a></span>
+						<%}%>
 							<br>20<%=postInfo.getP_date()%>
 							<span class="cnt">View : <%=postInfo.getP_view()%> / Like : <%=postInfo.getP_like()%></span>
 						</p>
@@ -479,10 +483,14 @@ function replyOverflow(){
 								Like <br><%=r.getR_like()%><br><%=rstr%></div>
 							<%
 								}
-							%>
 
-							<p><%=r.getU_nick()%>(<%=r.getU_id().substring(0, 3) + "***"%>)
-							</p>
+								if(userck!=null&&userck.getU_id().equals(r.getU_id())) {
+							%>
+							<p><a  class="userIntro" title="내 개인정보 조회" href="../info"><%=r.getU_nick()%>(<%=r.getU_id().substring(0, 3) + "***"%>)
+							<% }else{%>
+							<p><a  class="userIntro" title="'<%=r.getU_nick()%>'의 소개글과 작성글 조회" href="../intro?&nick=<%=r.getU_nick()%>"><%=r.getU_nick()%>(<%=r.getU_id().substring(0, 3) + "***"%>)
+							<%} %>
+							</a></p>
 							<p id="r<%=r.getR_index()%>" class="rc rc_nm"><%=r.getContents()%></p>
 							<p><%=r.getR_date()%><a class="detail">...더보기</a></p>
 						</div>

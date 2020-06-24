@@ -7,6 +7,7 @@ import com.lorem.ipsum.model.logon.UserInfoModel;
 import com.lorem.ipsum.model.logon.UserModel;
 
 public interface LogonService {
+	String getIdBtNick(String u_nick);
 	void changePw(String u_id, String new_pw);
 	void editInfo(String u_id, String u_nick, String u_email, String u_phnum, String u_intro);
 	UserInfoModel getUserInfo(String u_id);

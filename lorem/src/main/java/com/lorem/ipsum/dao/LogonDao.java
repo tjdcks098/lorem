@@ -13,6 +13,7 @@ import com.lorem.ipsum.model.logon.UserInfoModel;
 @Repository
 @Mapper
 public interface LogonDao {
+	String getIdByNick(String u_nick);
 	void changePw(String u_id, String new_pw);
 	void editInfoPri(String u_id, String u_email, String u_phnum);
 	void editInfoPub(String u_id, String u_nick, String u_intro);
