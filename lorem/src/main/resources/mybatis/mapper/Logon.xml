@@ -3,10 +3,14 @@
 
 <mapper namespace="com.lorem.ipsum.dao.LogonDao">
 
-	<update id="editInfo">
+	<update id="editInfoPri">
 		update acc_pri 
 		set u_phnum=#{u_phnum}, u_email=#{u_email} 
 		where u_id=#{u_id}
+
+	</update>
+	<update id="editInfoPub">
+
 		update acc_pub
 		set u_nick=#{u_nick}, u_intro=#{u_intro}
 		where u_id=#{u_id}

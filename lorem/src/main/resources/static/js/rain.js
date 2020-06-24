@@ -351,8 +351,6 @@
 				else canvas.strokeStyle= "rgba(255,255,255,"+(w<30?(30-w)/30:0.04)+")";
 				if(w<31){
 					let ex=Math.pow(ws*w,0.8)*2;
-					//if(debugBool)canvas.strokeStyle= "rgba("+debugcolor(a)+","+(30-w)/30+")";
-					//else canvas.strokeStyle= "rgba(255,255,255,"+(30-w)/30+")";
 					canvas.lineWidth=Math.floor(d*(10/w))+1;
 					canvas.beginPath();
 					canvas.arc(x,y*4,ex,0,6.3);
@@ -360,8 +358,6 @@
 				}
 				if(w2>0&&w2<31){
 					let ex2=Math.pow(ws*w2,0.8)*2;
-					//if(debugBool)canvas.strokeStyle= "rgba("+debugcolor(a)+","+(30-w2)/30+")";
-					//else canvas.strokeStyle= "rgba(255,255,255,"+(30-w2)/30+")";
 					canvas.lineWidth=Math.floor(d*(10/w2))+1;
 					canvas.beginPath();
 					canvas.arc(x,(y-(5/w2)*d*d)*4,ex2,0,6.3,true);
@@ -369,8 +365,6 @@
 				}
 				if(w3>0){
 					let ex3=Math.pow(ws*w3,0.8)*2;
-					//if(debugBool)canvas.strokeStyle= "rgba("+debugcolor(a)+","+(30-w3)/30+")";
-					//else canvas.strokeStyle= "rgba(255,255,255,"+(30-w3)/30+")";
 					canvas.lineWidth=Math.floor(d*(3/w3))+1;
 					canvas.beginPath();
 					canvas.arc(x,y*4,ex3,0,6.3,true);

@@ -127,6 +127,7 @@ public class LogonServiceImpl implements LogonService {
 
 	@Override
 	public void editInfo(String u_id, String u_nick, String u_email, String u_phnum, String u_intro) {
-		logonDao.editInfo( u_id,u_nick, u_email, u_phnum, u_intro);
+		logonDao.editInfoPri( u_id, u_email, u_phnum);
+		logonDao.editInfoPub( u_id,u_nick, u_intro);
 	}
 }

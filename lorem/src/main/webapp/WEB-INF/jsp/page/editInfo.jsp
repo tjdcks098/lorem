@@ -37,7 +37,7 @@ function sm(){
  		alert("비밀번호가 옳바르지 않습니다.");
  		return false;
  	}else if($('#new_pw').val().length>0&&$('#new_pw').val()!=$('#new_pwck').val()){
-			alert("비밀번호 확인 값이 다릅니다.");
+			alert($('#new_pw').val()+"\n"+$('#new_pwck').val()+"\n비밀번호 확인 값이 다릅니다.");
 	 		return false;
  	}
  	var d={u_nick:$('#u_nick').val(), 
@@ -135,18 +135,18 @@ function fnkck(){
 								</tr>
 								<tr>
 									<td style="font-weight: bold;">기존 비밀번호</td>
-									<td colspan="2"><input type="text" name="prv_pw"
+									<td colspan="2"><input type="password" name="prv_pw"
 										id="prv_pw" class="roundIpt"></td>
 								</tr>
 								<tr>
 									<td style="font-weight: bold;">새 비밀번호</td>
-									<td colspan="2"><input type="text" name="new_pw"
+									<td colspan="2"><input type="password" name="new_pw"
 										id="new_pw" class="roundIpt"></td>
 								</tr>
 								<tr>
 									<td style="font-weight: bold;">새 비밀번호 확인</td>
-									<td colspan="2"><input type="text" name="new_pwck"
-										id=""new_pwck"" class="roundIpt"></td>
+									<td colspan="2"><input type="password" name="new_pwck"
+										id="new_pwck" class="roundIpt"></td>
 								</tr>
 								<tr>
 									<td style="font-weight: bold;">이메일</td>

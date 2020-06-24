@@ -14,7 +14,8 @@ import com.lorem.ipsum.model.logon.UserInfoModel;
 @Mapper
 public interface LogonDao {
 	void changePw(String u_id, String new_pw);
-	void editInfo(String u_id, String u_nick, String u_email, String u_phnum, String u_intro);
+	void editInfoPri(String u_id, String u_email, String u_phnum);
+	void editInfoPub(String u_id, String u_nick, String u_intro);
 	UserInfoModel getUserInfo(String u_id);
 	void findId(UserFindModel user);
 	void findPw(UserFindModel user);

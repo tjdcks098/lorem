@@ -20,7 +20,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport"
-	content="user-scalable=no,initial-scale=1, maximum-scale=1">
+	content="user-scalable=no,initial-scale=1, maximum-scale=5">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <link rel="stylesheet" href="css/common.css">
 <link rel="stylesheet" href="css/welcome.css">
