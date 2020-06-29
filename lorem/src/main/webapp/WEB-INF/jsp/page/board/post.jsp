@@ -1,4 +1,5 @@
 
+<%@page import="com.lorem.ipsum.model.logon.UserModel"%>
 <%@page import="java.util.Collections"%>
 <%@page import="com.lorem.ipsum.model.post.PostFileModel"%>
 <%@page import="com.lorem.ipsum.model.post.ReplyModel"%>

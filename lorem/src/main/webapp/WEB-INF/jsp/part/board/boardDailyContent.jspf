@@ -1,12 +1,52 @@
+
+<%@page import="com.lorem.ipsum.model.post.PostInfoModel"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%
+	PostInfoModel postInfo=(PostInfoModel)request.getAttribute("postInfo");
+
+%>
 <div id="boardInfo">
 	<h3><%=boardName%></h3>
 </div>
 <div id="con">
 	<div id="contentsList">
-		<div class="listHeader">Post List
+		<%
+			ArrayList<String> dateList = new ArrayList<String>();
+		Calendar cld = Calendar.getInstance();
+		cld.setTime(new Date());
+		SimpleDateFormat df = new SimpleDateFormat("yyyy년 MM월 dd일");
+		dateList.add(df.format(cld.getTime()));
+		for (int i = 0; i < 9; i++) {
+			cld.add(Calendar.DATE, -1);
+			dateList.add(df.format(cld.getTime()));
+		}
+		%>
+		<script>
+		dateList=[];
+		currIndex=0;
+		<%for (String d : dateList) {%>
+				dateList.push('<%=d%>
+			');
+		<%}%>
+			$(document).ready(function() {
+				$(".listHeader h3").html(dateList[currIndex]);
+				$.ajax(
+			});
+		</script>
 		
+		<div class="listHeader">
+			<a class="ctrBtn"
+				href="../post?&name=<%=URLEncoder.encode(boardName)%>&postId=<%=postInfo.getP_id() + 1%>"
+				<%=postInfo.getHasPrev().equals("true") ? "" : "style='display:none;'"%>>◀이전글</a>
+			<h3></h3>
+			<a class="ctrBtn"
+				href="../post?&name=<%=URLEncoder.encode(boardName)%>&postId=<%=postInfo.getP_id() - 1%>"
+				<%=postInfo.getHasNext().equals("true") ? "" : "style='display:none;'"%>>다음글▶</a>
 		</div>
 
 		<%
@@ -35,11 +75,9 @@
 
 			</p>
 
-			<p class="postWriter"
-				style='display:inline-block'><%=(postList.get(i).getU_nick().length() > 8 ? postList.get(i).getU_nick().substring(0, 6) + "..."
+			<p class="postWriter" style='display: inline-block'><%=(postList.get(i).getU_nick().length() > 8 ? postList.get(i).getU_nick().substring(0, 6) + "..."
 		: postList.get(i).getU_nick()) + "(" + postList.get(i).getU_id().substring(0, 3) + "***)"%></p>
-			<div class="postInfo"
-				style='display:inline-block; float:right'>
+			<div class="postInfo" style='display: inline-block; float: right'>
 				<p><%=postList.get(i).getP_date()%></p>
 			</div>
 		</div>
@@ -50,6 +88,7 @@
 		%>
 
 	</div>
+	<hr>
 	<div id="write">
 		<form action="../write.do">
 			<input type="hidden" id="board" name="board"
