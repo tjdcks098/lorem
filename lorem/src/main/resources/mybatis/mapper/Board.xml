@@ -8,7 +8,7 @@
 			b_name
 		,	b_rlevel
 		,	b_wlevel
-		,	b_posttype
+		,	b_type
 		from board 
 		where b_name=#{name}
 	</select>
@@ -17,7 +17,7 @@
 			b_name
 		,	b_rlevel
 		,	b_wlevel
-		,	b_posttype
+		,	b_type
 		from board 
 		order by b_index
 	</select>

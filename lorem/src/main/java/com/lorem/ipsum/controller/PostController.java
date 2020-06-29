@@ -114,7 +114,7 @@ public class PostController {
 			mv.addObject("postId", p_id);
 			mv.addObject("title", p_title);
 			mv.addObject("contents", contents);
-			mv.setViewName("page/edit");
+			mv.setViewName("page/board/edit");
 		} catch (SessionFailException e) {
 			mv.addObject("msg", e.getMsg());
 			mv.addObject("redirect", request.getHeader("Referer"));
@@ -313,7 +313,7 @@ public class PostController {
 		mv.addObject("postFile", postContentsService.getFiles(p_id, b_name));
 		mv.addObject("replyList", replyService.getPostReplies(Integer.valueOf(p_id), b_name));
 
-		mv.setView(new RedirectView("../post"));
+		mv.setView(new RedirectView("../board/post"));
 		return mv;
 	}
 
@@ -347,7 +347,7 @@ public class PostController {
 			mv.addObject("logonMsg", e.getMsg());
 		}
 
-		mv.setViewName("page/write");
+		mv.setViewName("page/board/write");
 		return mv;
 	}
 
@@ -360,7 +360,7 @@ public class PostController {
 		} catch (UnsupportedEncodingException e1) {
 			e1.printStackTrace();
 		}
-		String type=boardService.getBoardInf(b_name).getB_postType();
+		String type=boardService.getBoardInf(b_name).getB_type();
 		try {
 			commons.logonCheck(session, logonService);
 
@@ -462,7 +462,7 @@ public class PostController {
 		mv.addObject("postContents", postContentsService.getContents(Integer.valueOf(p_id), b_name));
 		mv.addObject("postFile", postContentsService.getFiles(p_id, b_name));
 		mv.addObject("replyList", replyService.getPostReplies(Integer.valueOf(p_id), b_name));
-		mv.setViewName("page/post");
+		mv.setViewName("page/board/post");
 		commons.setAlwaysReload(response);
 		return mv;
 	}

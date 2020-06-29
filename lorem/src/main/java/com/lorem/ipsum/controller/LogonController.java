@@ -35,7 +35,7 @@ public class LogonController {
 		mv.addObject("fid", null);
 		mv.addObject("fpw", null);
 		mv.addObject("fhint", null);
-		mv.setViewName("page/find");
+		mv.setViewName("page/account/find");
 		return mv;
 	}
 
@@ -45,7 +45,7 @@ public class LogonController {
 		String u_email = request.getParameter("emid") + "@" + request.getParameter("emadd");
 		String fid = logonService.findId(u_name, u_email);
 		mv.addObject("fid", fid);
-		mv.setViewName("page/find");
+		mv.setViewName("page/account/find");
 		return mv;
 	}
 
@@ -62,7 +62,7 @@ public class LogonController {
 		} else {
 			mv.addObject("fpw", "0");
 		}
-		mv.setViewName("page/find");
+		mv.setViewName("page/account/find");
 		return mv;
 	}
 
@@ -112,7 +112,7 @@ public class LogonController {
 	public ModelAndView join_policy(HttpServletRequest request, HttpSession session, HttpServletResponse response) {
 		if (session.getAttribute("user") == null) {
 			mv.addObject("referer", commons.baseUrl + "login");
-			mv.setViewName("page/join_policy");
+			mv.setViewName("page/account/join_policy");
 		} else {
 			mv.addObject("msg", "잘못된 접근입니다.");
 			mv.addObject("redirect", commons.baseUrl + "welcome");
@@ -129,7 +129,7 @@ public class LogonController {
 			String uck = (String) request.getParameter("user_ck");
 			String ick = (String) request.getParameter("info_ck");
 			if (uck != null && ick != null && uck.equals("true") && ick.equals("true")) {
-				mv.setViewName("page/join_info");
+				mv.setViewName("page/account/join_info");
 			} else {
 				mv.addObject("msg", "먼저 이용약관에 동의하셔야 합니다.");
 				mv.addObject("redirect", commons.baseUrl + "join/policy");
@@ -150,7 +150,7 @@ public class LogonController {
 			mv.addObject("msg", null);
 			String referer = request.getHeader("Referer");
 			session.setAttribute("referer", referer);
-			mv.setViewName("page/login");
+			mv.setViewName("page/account/login");
 			commons.setAlwaysReload(response);
 		} else {
 			mv.setView(new RedirectView(request.getHeader("Referer")));
@@ -195,7 +195,7 @@ public class LogonController {
 		} catch (_LoginException e) {
 			session.removeAttribute("user");
 			mv.addObject("msg", e.getMessage());
-			mv.setViewName("page/login");
+			mv.setViewName("page/account/login");
 		}
 		return mv;
 	}

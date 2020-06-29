@@ -72,7 +72,7 @@ public class InfoController {
 					|| e.getCode() == SessionFailException.INVALID_SESSION) {
 				mv.addObject("redirect", "../welcome");
 			} else {
-				mv.addObject("redirect", "../login");
+				mv.addObject("redirect", "../account/login");
 			}
 			mv.addObject("msg", e.getMsg());
 			mv.setViewName("logic/result");
@@ -101,7 +101,7 @@ public class InfoController {
 					|| e.getCode() == SessionFailException.INVALID_SESSION) {
 				mv.addObject("redirect", "../welcome");
 			} else {
-				mv.addObject("redirect", "../login");
+				mv.addObject("redirect", "../account/login");
 			}
 			mv.addObject("msg", e.getMsg());
 			mv.setViewName("logic/result");
@@ -119,7 +119,7 @@ public class InfoController {
 		mv.addObject("u_joindate", user.getU_joindate());
 		mv.addObject("u_level", user.getU_level());
 		mv.addObject("u_nick", user.getU_nick());
-		mv.setViewName("page/intro");
+		mv.setViewName("page/account/intro");
 		return mv;
 	}
 
