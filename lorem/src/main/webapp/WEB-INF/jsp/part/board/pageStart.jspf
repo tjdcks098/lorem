@@ -50,7 +50,7 @@ if (errMsg == null) {
 
 <div class="main">
 
-	<%@include file="jsp/part/topMenu.jspf"%>
+	<%@include file="../topMenu.jspf"%>
 	<%@include file="../sideMenu.jspf"%>
 	<div id="contents">
 		<div class="topspace"></div>

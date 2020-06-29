@@ -1,11 +1,104 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
+<div id="boardInfo">
+	<h3><%=boardName%></h3>
+</div>
+<div id="con">
+	<div id="contentsList">
+		<div class="listHeader">Post List
+		
+		</div>
 
-<body>
+		<%
+			if (postCount == 0) {
+		%>
 
+		<p
+			style="font-size: 1em; text-align: center; padding: 100px 0 100px 0;">게시글이
+			없습니다.</p>
+
+		<%
+			} else if (errMsg != null) {
+		%>
+		<p
+			style="font-size: 1em; text-align: center; padding: 100px 0 100px 0;"><%=errMsg%></p>
+
+		<%
+			} else {
+			for (int i = 0; i < (postCount > 20 ? 20 : postCount); i++) {
+		%>
+
+		<div class="postNoContents">
+			<p class="postTitle">
+				<%=postList.get(i).getP_title()
+		+ (postList.get(i).getP_update() == null ? "" : "<span style='font-size:0.5em;color:#808080'>(수정됨)</span>")%>
+
+			</p>
+
+			<p class="postWriter"
+				style='display:inline-block'><%=(postList.get(i).getU_nick().length() > 8 ? postList.get(i).getU_nick().substring(0, 6) + "..."
+		: postList.get(i).getU_nick()) + "(" + postList.get(i).getU_id().substring(0, 3) + "***)"%></p>
+			<div class="postInfo"
+				style='display:inline-block; float:right'>
+				<p><%=postList.get(i).getP_date()%></p>
+			</div>
+		</div>
+
+		<%
+			}
+		}
+		%>
+
+	</div>
+	<div id="write">
+		<form action="../write.do">
+			<input type="hidden" id="board" name="board"
+				value="<%=URLEncoder.encode(boardName, "utf-8")%>"><input
+				type="text" name="title"
+				style="padding: 0 5px; width: calc(100% - 90px);" class="search">
+			<input type="submit" class="search" style="padding: 0 5px"
+				value="글쓰기">
+		</form>
+
+
+	</div>
+	<div class="contentsPage">
+		<%
+			int st = 1;
+		if (Integer.valueOf(pageNum) > 3)
+			st = Integer.valueOf(pageNum) - 3;
+		if (pageNum != 1 && pageNum > 0) {
+		%>
+		◀<a class="page" id="pre_btn"
+			href="<%=commons.baseUrl%>board?&name=<%=URLEncoder.encode(boardName, "utf-8")%>&pageNum=<%=Integer.valueOf(pageNum) - 1%>">이전</a>&nbsp;&nbsp;
+		<%
+			} else {
+		%>
+		<a style="color: rgba(0, 0, 0, 0)">◀이전</a>&nbsp;&nbsp;
+
+		<%
+			}
+		int end = postCount / 20;
+		for (int i = st; i < end + 1; i++) {
+			String tstr = (pageNum == i) ? "style='font-weight:bold;'" : "";
+		%>
+		<a class="page" id="page<%=i%>"
+			href="<%=commons.baseUrl%>board?&name=<%=URLEncoder.encode(boardName, "utf-8")%>&pageNum=<%=i%>"
+			<%=tstr%>><%=i%></a>
+		<%
+			}
+		if (pageNum != end && end > 0) {
+		%>
+		&nbsp;&nbsp;<a class="page" id="nxt_btn"
+			href="<%=commons.baseUrl%>board?&name=<%=URLEncoder.encode(boardName, "utf-8")%>&pageNum=<%=Integer.valueOf(pageNum) + 1%>">다음</a>▶
+		<%
+			} else {
+		%>
+		&nbsp;&nbsp;<a style="color: rgba(0, 0, 0, 0)">다음▶</a>
+
+		<%
+			}
+		%>
+
+	</div>
+</div>
