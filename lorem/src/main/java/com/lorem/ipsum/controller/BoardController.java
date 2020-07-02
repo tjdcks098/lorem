@@ -2,6 +2,9 @@ package com.lorem.ipsum.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -87,6 +90,11 @@ public class BoardController {
 		mv.addObject("boardList", boardService.getBoardList());
 		switch (boardType) {
 		case "Daily":
+			String dailyKey=request.getParameter("dailyKey");
+			if(dailyKey==null) {
+				dailyKey=String.valueOf(new Date().getTime());
+			}
+			mv.addObject("dailyKey", dailyKey);
 			mv.setViewName("page/board/boardDaily");
 			break;
 		default:

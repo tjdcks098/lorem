@@ -1,5 +1,18 @@
+<%@page import="java.net.URLEncoder"%>
+<%@page import="com.lorem.ipsum.model.post.PostInfoModel"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <script>
+	$(document).ready(function() {
+		$("#search").submit(function() {
+			if ($("#keyword").val().length < 1) {
+				alert("검색 키워드를 입력해주세요.");
+				return false;
+			}
+		});
+	});
+</script>
 <div id="boardInfo">
 	<h3><%=boardName%></h3>
 </div>
@@ -8,6 +21,10 @@
 		<p class="listHeader">Post List</p>
 
 		<%
+
+			ArrayList<PostInfoModel> postList = new ArrayList<PostInfoModel>();
+			String type=(String)request.getAttribute("postType");	
+			postList = (ArrayList<PostInfoModel>) request.getAttribute("postList");
 			if (postCount == 0) {
 		%>
 
