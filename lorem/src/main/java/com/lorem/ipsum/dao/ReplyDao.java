@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import com.lorem.ipsum.model.dailyReply;
 import com.lorem.ipsum.model.post.ReplyModel;
 
 @Repository

@@ -21,7 +21,10 @@
 		<p class="listHeader">Post List</p>
 
 		<%
-
+			if (errMsg == null) {
+				postCount = Integer.valueOf((String) request.getAttribute("postCount"));
+				pageNum = Integer.valueOf((String) request.getAttribute("pageNum"));
+			}
 			ArrayList<PostInfoModel> postList = new ArrayList<PostInfoModel>();
 			String type=(String)request.getAttribute("postType");	
 			postList = (ArrayList<PostInfoModel>) request.getAttribute("postList");

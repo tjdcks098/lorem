@@ -17,11 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.lorem.ipsum.commons;
+import com.lorem.ipsum.exception.SessionFailException;
 import com.lorem.ipsum.model.BoardModel;
+import com.lorem.ipsum.model.dailyReply;
+import com.lorem.ipsum.model.logon.UserModel;
 import com.lorem.ipsum.service.BoardService;
 import com.lorem.ipsum.service.LogonService;
 import com.lorem.ipsum.service.PostInfoService;
 import com.lorem.ipsum.service.PostSearchService;
+import com.lorem.ipsum.service.ReplyService;
 
 @CrossOrigin
 @RestController
@@ -38,6 +42,9 @@ public class BoardController {
 
 	@Autowired
 	PostSearchService postSearchService;
+	
+	@Autowired
+	ReplyService replyService;
 
 	ModelAndView mv = new ModelAndView();
 
@@ -83,8 +90,6 @@ public class BoardController {
 		String boardType = board.getB_type();
 		mv.addObject("pageNum", pageNum);
 		mv.addObject("postType", boardType);
-		mv.addObject("postCount", postInfoService.getPostCount(b_name));
-		mv.addObject("postList", postInfoService.getPostList(b_name, Integer.valueOf(pageNum)));
 		mv.addObject("errMsg", null);
 		mv.addObject("name", b_name);
 		mv.addObject("boardList", boardService.getBoardList());
@@ -92,12 +97,15 @@ public class BoardController {
 		case "Daily":
 			String dailyKey=request.getParameter("dailyKey");
 			if(dailyKey==null) {
-				dailyKey=String.valueOf(new Date().getTime());
+				dailyKey=String.valueOf(new Date(new Date().getYear(), new Date().getMonth(), new Date().getDate()).getTime());
 			}
 			mv.addObject("dailyKey", dailyKey);
 			mv.setViewName("page/board/boardDaily");
 			break;
 		default:
+			mv.addObject("postCount", postInfoService.getPostCount(b_name));
+			mv.addObject("postList", postInfoService.getPostList(b_name, Integer.valueOf(pageNum)));
+			
 			mv.setViewName("page/board/boardNormal");
 			break;
 		}
@@ -105,4 +113,26 @@ public class BoardController {
 		return mv;
 	}
 
+	
+	@RequestMapping("/dailyWrite.do")
+	public String dailyWrite(HttpServletRequest request, dailyReply reply) {
+		try {
+			commons.logonCheck(request.getSession(), logonService);
+		} catch (SessionFailException e) {
+			String html="";
+			if(e.getCode()==SessionFailException.INVALID_SESSION)
+				html+="alert('유효한 세션이 아닙니다.');";
+			html+="if(confirm('로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?')){";
+			html+="location.href='../login';}";
+			
+		}
+		System.out.println(reply.getBoard()+"  "+reply.getContent()+"  "+reply.getDailyKey());
+		if(reply==null)return "alert('전송중 오류가 발생했습니다.')";
+		if(boardService.getDailyPostId(reply.getBoard(), reply.getDailyKey())==null) {
+			boardService.setDailyPostId(reply.getBoard(), reply.getDailyKey());
+		}
+		UserModel user=(UserModel)request.getSession().getAttribute("user");
+		boardService.addDailyPost(reply, user.getU_id());
+		return "";
+	}
 }

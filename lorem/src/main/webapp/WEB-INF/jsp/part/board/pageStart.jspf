@@ -13,10 +13,7 @@ ArrayList<BoardModel> boardList = (ArrayList<BoardModel>) request.getAttribute("
 String boardName = (String) request.getAttribute("name");
 int pageNum = -1;
 int postCount = -1;
-if (errMsg == null) {
-	postCount = Integer.valueOf((String) request.getAttribute("postCount"));
-	pageNum = Integer.valueOf((String) request.getAttribute("pageNum"));
-}
+
 %>
 <!DOCTYPE html>
 <html lang="ko">

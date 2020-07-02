@@ -3,6 +3,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.lorem.ipsum.dao.BoardDao">
+	<insert id="addDailyPost">
+		insert into reply()
+	</insert>
+	<insert id="setDailyPostId" statementType="CALLABLE">
+	{
+		call newpost(#{d_key},'admin', #{b_name},#{p_id, mode=OUT, jdbcType=NUMERIC })
+	}
+	</insert>
+	<select id="getDailyPostId" resultType="_int">
+		select max(p_id)
+		from post_info
+		where b_name=#{b_name} and p_title=#{d_key}
+	</select>
+
 	<select id="getBoardInf" resultType="com.lorem.ipsum.model.BoardModel">
 		select
 			b_name

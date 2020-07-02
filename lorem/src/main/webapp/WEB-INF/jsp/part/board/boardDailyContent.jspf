@@ -1,6 +1,6 @@
 
+<%@page import="com.lorem.ipsum.model.post.ReplyModel"%>
 <%@page import="java.net.URLEncoder"%>
-<%@page import="com.lorem.ipsum.model.post.PostInfoModel"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.Calendar"%>
@@ -8,17 +8,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	ArrayList<PostInfoModel> postList = new ArrayList<PostInfoModel>();
-postList = (ArrayList<PostInfoModel>) request.getAttribute("postList");
 String dailyKey = (String) request.getAttribute("dailyKey");
 Date currday=new Date(Long.valueOf(dailyKey));
 SimpleDateFormat df= new SimpleDateFormat("yyyy년 MM월");
 %>
 <style>
-.overDate{
-color:gray; 
+.overDate {
+	color: gray;
 	margin: 0 5px;
 }
+
 .dateSel {
 	margin: 0 5px;
 }
@@ -43,8 +42,6 @@ color:gray;
 				dateList[i] = new Date(currDate.getTime());
 				dateList[i].setDate(currDate.getDate() - 3 + i);
 			}
-			console.log(currDate);
-			console.log(dateList);
 
 			$(document).ready(
 					function() {
@@ -58,110 +55,99 @@ color:gray;
 								html += "<a class='dateSel' style='font-weight:bold; text-decoration:underline;'>"
 									+ dateList[i].getDate() + "일</a>";
 							} else {
-								html += "<a class='dateSel' href='<%=commons.baseUrl%>board?&name=<%=boardName%>&dailyKey="+dateList[i].getTime()+"'>"
-										+ dateList[i].getDate() + "일</a>";
-							}
-						}
-						$(".dateList").html(html);
-					});
+								html += "<a class='dateSel' href='<%=commons.baseUrl%>board?&name=<%=boardName%>&dailyKey="
+												+ dateList[i].getTime()
+												+ "'>"
+												+ dateList[i].getDate()
+												+ "일</a>";
+									}
+								}
+								$(".dateList").html(html);
+
+								$("#frm").submit(function() {
+									if ($("#content").val().length < 1) {
+										alert("내용을 입력해주세요.");
+										return false;
+									}
+									d=$('#frm').serialize();
+									$.ajax({
+										type: 'POST',
+										url:'../dailyWrite.do',
+										dataType: "script",
+										data:d,
+										success:function(data){
+											alert(data);
+											}
+										});
+								});
+							});
 		</script>
 
 		<div class="listHeader">
-			<p style="font-size:1.8em; font-weight: 400"><%=df.format(currday)%></p>
+			<p style="font-size: 1.8em; font-weight: 400"><%=df.format(currday)%></p>
 			<p class="dateList"></p>
 		</div>
-
-		<%
-			if (postCount == 0) {
-		%>
-
-		<p
-			style="font-size: 1em; text-align: center; padding: 100px 0 100px 0;">게시글이
-			없습니다.</p>
-
-		<%
-			} else if (errMsg != null) {
-		%>
-		<p
-			style="font-size: 1em; text-align: center; padding: 100px 0 100px 0;"><%=errMsg%></p>
-
-		<%
-			} else {
-			for (int i = 0; i < (postCount > 20 ? 20 : postCount); i++) {
-		%>
-
-		<div class="postNoContents">
-			<p class="postTitle">
-				<%=postList.get(i).getP_title()
-		+ (postList.get(i).getP_update() == null ? "" : "<span style='font-size:0.5em;color:#808080'>(수정됨)</span>")%>
-
-			</p>
-
-			<p class="postWriter" style='display: inline-block'><%=(postList.get(i).getU_nick().length() > 8 ? postList.get(i).getU_nick().substring(0, 6) + "..."
-		: postList.get(i).getU_nick()) + "(" + postList.get(i).getU_id().substring(0, 3) + "***)"%></p>
-			<div class="postInfo" style='display: inline-block; float: right'>
-				<p><%=postList.get(i).getP_date()%></p>
-			</div>
+		<div class="contentBox">
 		</div>
 
-		<%
-			}
-		}
-		%>
-
 	</div>
-	<%if( new Date(Long.valueOf(dailyKey)).getDate()==new Date().getDate()){ %>
+	<%
+		if(new Date(Long.valueOf(dailyKey)).getDate()==new Date().getDate()){
+	%>
 	<hr>
-	<div id="write">
-		<form action="../write.do">
-			<input type="hidden" id="board" name="board"
-				value="<%=URLEncoder.encode(boardName, "utf-8")%>"><input
-				type="text" name="title"
-				style="padding: 0 5px; width: calc(100% - 90px);" class="search">
-			<input type="submit" class="search" style="padding: 0 5px"
-				value="글쓰기">
+	<div id="write" method="post">
+		<form id="frm">
+			<input type="hidden" id="board" name="board" value="<%=boardName%>">
+			<input type="hidden" id="dailyKey" name="dailyKey"
+				value="<%=dailyKey%>"><input type="text" name="content"
+				id="content" style="padding: 0 5px; width: calc(100% - 90px);"
+				class="search"> <input type="submit" class="search"
+				style="padding: 0 5px" value="글쓰기">
 		</form>
 	
-
+	
 	</div>
-	<%} %>
+	<%
+		}
+	%>
 	<div class="contentsPage">
 		<%
-			int st = 1;
-		if (Integer.valueOf(pageNum) > 3)
-			st = Integer.valueOf(pageNum) - 3;
-		if (pageNum != 1 && pageNum > 0) {
+			int st = 1;if(Integer.valueOf(pageNum)>3)st=Integer.valueOf(pageNum)-3;if(pageNum!=1&&pageNum>0)
+		{
 		%>
 		◀<a class="page" id="pre_btn"
 			href="<%=commons.baseUrl%>board?&name=<%=URLEncoder.encode(boardName, "utf-8")%>&pageNum=<%=Integer.valueOf(pageNum) - 1%>">이전</a>&nbsp;&nbsp;
 		<%
-			} else {
+			}else
+		{
 		%>
 		<a style="color: rgba(0, 0, 0, 0)">◀이전</a>&nbsp;&nbsp;
-
+	
 		<%
 			}
-		int end = postCount / 20;
-		for (int i = st; i < end + 1; i++) {
+		int end = postCount / 20;for(
+		int i = st;i<end+1;i++)
+		{
 			String tstr = (pageNum == i) ? "style='font-weight:bold;'" : "";
 		%>
 		<a class="page" id="page<%=i%>"
 			href="<%=commons.baseUrl%>board?&name=<%=URLEncoder.encode(boardName, "utf-8")%>&pageNum=<%=i%>"
 			<%=tstr%>><%=i%></a>
 		<%
-			}
-		if (pageNum != end && end > 0) {
+			}if(pageNum!=end&&end>0)
+		{
 		%>
 		&nbsp;&nbsp;<a class="page" id="nxt_btn"
 			href="<%=commons.baseUrl%>board?&name=<%=URLEncoder.encode(boardName, "utf-8")%>&pageNum=<%=Integer.valueOf(pageNum) + 1%>">다음</a>▶
 		<%
-			} else {
+			}else
+		{
 		%>
 		&nbsp;&nbsp;<a style="color: rgba(0, 0, 0, 0)">다음▶</a>
-
+	
 		<%
 			}
 		%>
-
+	
 	</div>
 </div>
