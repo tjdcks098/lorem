@@ -28,7 +28,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public String getDailyPostId(String b_name, String d_key) {
-		return boardDao.getDailyPostId(b_name, d_key);
+		return String.valueOf(boardDao.getDailyPostId(b_name, d_key));
 	}
 
 	@Override

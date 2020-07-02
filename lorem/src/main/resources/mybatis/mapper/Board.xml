@@ -4,7 +4,8 @@
 
 <mapper namespace="com.lorem.ipsum.dao.BoardDao">
 	<insert id="addDailyPost">
-		insert into reply()
+		insert into reply(p_id, u_id, b_name, contents) 
+		values(#{p_id},#{u_id},#{b_name},#{content} )
 	</insert>
 	<insert id="setDailyPostId" statementType="CALLABLE">
 	{

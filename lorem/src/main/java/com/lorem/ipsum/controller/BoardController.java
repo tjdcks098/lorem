@@ -122,17 +122,24 @@ public class BoardController {
 			String html="";
 			if(e.getCode()==SessionFailException.INVALID_SESSION)
 				html+="alert('유효한 세션이 아닙니다.');";
-			html+="if(confirm('로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?')){";
+			html+="if(confirm('로그인이 필요한 서비스입니다.\\n로그인 하시겠습니까?')){";
 			html+="location.href='../login';}";
-			
+			return html;
 		}
 		System.out.println(reply.getBoard()+"  "+reply.getContent()+"  "+reply.getDailyKey());
 		if(reply==null)return "alert('전송중 오류가 발생했습니다.')";
-		if(boardService.getDailyPostId(reply.getBoard(), reply.getDailyKey())==null) {
-			boardService.setDailyPostId(reply.getBoard(), reply.getDailyKey());
+		if(boardService.getDailyPostId(reply.getBoard(), String.valueOf(reply.getDailyKey()))==null) {
+			boardService.setDailyPostId(reply.getBoard(),  String.valueOf(reply.getDailyKey()));
 		}
 		UserModel user=(UserModel)request.getSession().getAttribute("user");
 		boardService.addDailyPost(reply, user.getU_id());
-		return "";
+		String html="";
+		html+="$('.contentBox').html($('.contentBox').html()+"
+				+ "<p><span style='font-weight:bold'>"
+				+	user.getU_id()
+				+"</span><br>"
+				+reply.getContent()
+				+ "</p>);";
+		return html;
 	}
 }

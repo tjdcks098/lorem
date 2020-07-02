@@ -14,6 +14,6 @@ public interface BoardDao {
 	void addDailyPost(int p_id, String u_id, String b_name, String content);
 	BoardModel getBoardInf(String name);
 	ArrayList<BoardModel> getBoardList();
-	String getDailyPostId(String b_name, String d_key);
+	int getDailyPostId(String b_name, String d_key);
 	void setDailyPostId(String b_name, String d_key, String p_id);
 }

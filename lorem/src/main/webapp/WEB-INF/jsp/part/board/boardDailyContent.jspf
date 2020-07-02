@@ -75,10 +75,14 @@ SimpleDateFormat df= new SimpleDateFormat("yyyy년 MM월");
 										url:'../dailyWrite.do',
 										dataType: "script",
 										data:d,
-										success:function(data){
-											alert(data);
-											}
-										});
+										async:true,
+										success:function(script){
+										},
+										error:function(request,status,error){
+										    console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+										 }
+									});
+									return false;
 								});
 							});
 		</script>
@@ -95,8 +99,8 @@ SimpleDateFormat df= new SimpleDateFormat("yyyy년 MM월");
 		if(new Date(Long.valueOf(dailyKey)).getDate()==new Date().getDate()){
 	%>
 	<hr>
-	<div id="write" method="post">
-		<form id="frm">
+	<div id="write">
+		<form id="frm" method="post">
 			<input type="hidden" id="board" name="board" value="<%=boardName%>">
 			<input type="hidden" id="dailyKey" name="dailyKey"
 				value="<%=dailyKey%>"><input type="text" name="content"
@@ -125,8 +129,8 @@ SimpleDateFormat df= new SimpleDateFormat("yyyy년 MM월");
 	
 		<%
 			}
-		int end = postCount / 20;for(
-		int i = st;i<end+1;i++)
+		int end = postCount / 20;
+		for(int i = st;i<end+1;i++)
 		{
 			String tstr = (pageNum == i) ? "style='font-weight:bold;'" : "";
 		%>
@@ -134,7 +138,8 @@ SimpleDateFormat df= new SimpleDateFormat("yyyy년 MM월");
 			href="<%=commons.baseUrl%>board?&name=<%=URLEncoder.encode(boardName, "utf-8")%>&pageNum=<%=i%>"
 			<%=tstr%>><%=i%></a>
 		<%
-			}if(pageNum!=end&&end>0)
+			}
+		if(pageNum!=end&&end>0)
 		{
 		%>
 		&nbsp;&nbsp;<a class="page" id="nxt_btn"
