@@ -99,6 +99,12 @@ public class BoardController {
 			if(dailyKey==null) {
 				dailyKey=String.valueOf(new Date(new Date().getYear(), new Date().getMonth(), new Date().getDate()).getTime());
 			}
+			String p_id;
+			if((p_id=boardService.getDailyPostId(b_name, dailyKey))!=null) {
+				mv.addObject("postList", replyService.getPostReplies(Integer.valueOf(p_id), b_name));
+			}else {
+				mv.addObject("postList",null);
+			}
 			mv.addObject("dailyKey", dailyKey);
 			mv.setViewName("page/board/boardDaily");
 			break;
@@ -132,14 +138,14 @@ public class BoardController {
 			boardService.setDailyPostId(reply.getBoard(),  String.valueOf(reply.getDailyKey()));
 		}
 		UserModel user=(UserModel)request.getSession().getAttribute("user");
+		if(boardService.hasDailyPost(reply, user.getU_id())) {
+			return "alert('이미 오늘의 출석체크를 하셨습니다.');"
+					+ "$('.myDP').css('transition','.5s');"
+					+ "$('.myDP').css('backgroundColor','rgb(200,255,200)');";
+		}
 		boardService.addDailyPost(reply, user.getU_id());
 		String html="";
-		html+="$('.contentBox').html($('.contentBox').html()+"
-				+ "<p><span style='font-weight:bold'>"
-				+	user.getU_id()
-				+"</span><br>"
-				+reply.getContent()
-				+ "</p>);";
+		html+="history.go(0);";
 		return html;
 	}
 }

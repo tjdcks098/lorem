@@ -1,4 +1,5 @@
 
+<%@page import="com.lorem.ipsum.model.logon.UserModel"%>
 <%@page import="com.lorem.ipsum.model.post.ReplyModel"%>
 <%@page import="java.net.URLEncoder"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -8,16 +9,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
+
+String u_nick="";
+if (user!=null)u_nick=user.getU_nick();
 String dailyKey = (String) request.getAttribute("dailyKey");
 Date currday=new Date(Long.valueOf(dailyKey));
 SimpleDateFormat df= new SimpleDateFormat("yyyy년 MM월");
+ArrayList<ReplyModel> postList=(ArrayList<ReplyModel>)request.getAttribute("postList");
 %>
 <style>
 .overDate {
 	color: gray;
 	margin: 0 5px;
 }
-
+.dailyPost{
+	padding:5px;
+	border-bottom:1px #606060 dashed;
+}
+.dailyPost:last-child{
+	border-bottom:1px #000000 solid;
+}
 .dateSel {
 	margin: 0 5px;
 }
@@ -33,6 +44,34 @@ SimpleDateFormat df= new SimpleDateFormat("yyyy년 MM월");
 <div id="con">
 	<div id="contentsList">
 		<script>
+			postList=[]
+			<%if(postList!=null)for(ReplyModel rm : postList){%>
+			postList.push({"u_nick":"<%=rm.getU_nick()%>","u_id":"<%=rm.getU_id().substring(0,3)+"***"%>", "content":"<%=rm.getContents()%>", "date":"<%=rm.getR_date()%>"});
+			<%}%>
+			postCount=postList.length;
+			currPage=0;
+			function showDailyPost(){
+				html="";
+				if(postCount<10){
+					for(i=0; i<postCount; i++){
+						if(postList[i]['u_nick']=="<%=u_nick%>"){
+							html+="<div class='dailyPost myDP'>";
+						}else{
+							html+="<div class='dailyPost'>";
+						}
+						html+="<p style='font-weight:bold; font-size:0.8em;'>"
+							+postList[i]['u_nick']+"("
+							+postList[i]['u_id']+")<span style='font-weight:normal; color:#909090; float:right;'>"
+							+postList[i]['date']+"</span></p><p>"
+							+postList[i]['content']+"</p></div>";
+						
+					}
+				}
+
+				
+				$(".contentBox").html(html);
+			}
+		
 			currDate = new Date(
 		<%=dailyKey%>
 			);
@@ -45,6 +84,7 @@ SimpleDateFormat df= new SimpleDateFormat("yyyy년 MM월");
 
 			$(document).ready(
 					function() {
+						showDailyPost();
 						html = '';
 						for (i = 0; i < dateList.length; i++) {
 							if (today.getTime()<dateList[i].getTime()){
@@ -98,14 +138,13 @@ SimpleDateFormat df= new SimpleDateFormat("yyyy년 MM월");
 	<%
 		if(new Date(Long.valueOf(dailyKey)).getDate()==new Date().getDate()){
 	%>
-	<hr>
 	<div id="write">
 		<form id="frm" method="post">
 			<input type="hidden" id="board" name="board" value="<%=boardName%>">
 			<input type="hidden" id="dailyKey" name="dailyKey"
 				value="<%=dailyKey%>"><input type="text" name="content"
 				id="content" style="padding: 0 5px; width: calc(100% - 90px);"
-				class="search"> <input type="submit" class="search"
+				class="search"> <input type="submit" class="search" id="wbtn"
 				style="padding: 0 5px" value="글쓰기">
 		</form>
 	
@@ -115,44 +154,7 @@ SimpleDateFormat df= new SimpleDateFormat("yyyy년 MM월");
 		}
 	%>
 	<div class="contentsPage">
-		<%
-			int st = 1;if(Integer.valueOf(pageNum)>3)st=Integer.valueOf(pageNum)-3;if(pageNum!=1&&pageNum>0)
-		{
-		%>
-		◀<a class="page" id="pre_btn"
-			href="<%=commons.baseUrl%>board?&name=<%=URLEncoder.encode(boardName, "utf-8")%>&pageNum=<%=Integer.valueOf(pageNum) - 1%>">이전</a>&nbsp;&nbsp;
-		<%
-			}else
-		{
-		%>
-		<a style="color: rgba(0, 0, 0, 0)">◀이전</a>&nbsp;&nbsp;
-	
-		<%
-			}
-		int end = postCount / 20;
-		for(int i = st;i<end+1;i++)
-		{
-			String tstr = (pageNum == i) ? "style='font-weight:bold;'" : "";
-		%>
-		<a class="page" id="page<%=i%>"
-			href="<%=commons.baseUrl%>board?&name=<%=URLEncoder.encode(boardName, "utf-8")%>&pageNum=<%=i%>"
-			<%=tstr%>><%=i%></a>
-		<%
-			}
-		if(pageNum!=end&&end>0)
-		{
-		%>
-		&nbsp;&nbsp;<a class="page" id="nxt_btn"
-			href="<%=commons.baseUrl%>board?&name=<%=URLEncoder.encode(boardName, "utf-8")%>&pageNum=<%=Integer.valueOf(pageNum) + 1%>">다음</a>▶
-		<%
-			}else
-		{
-		%>
-		&nbsp;&nbsp;<a style="color: rgba(0, 0, 0, 0)">다음▶</a>
-	
-		<%
-			}
-		%>
+		
 	
 	</div>
 </div>

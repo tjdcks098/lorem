@@ -28,7 +28,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public String getDailyPostId(String b_name, String d_key) {
-		return String.valueOf(boardDao.getDailyPostId(b_name, d_key));
+		return boardDao.getDailyPostId(b_name, d_key);
 	}
 
 	@Override
@@ -42,6 +42,13 @@ public class BoardServiceImpl implements BoardService {
 	public void addDailyPost(dailyReply reply, String u_id) {
 		boardDao.addDailyPost(Integer.valueOf(boardDao.getDailyPostId(reply.getBoard(), reply.getDailyKey())), u_id, reply.getBoard(), reply.getContent());
 		
+	}
+
+	@Override
+	public boolean hasDailyPost(dailyReply reply, String u_id) {
+		if(boardDao.hasDailyPost(Integer.valueOf(boardDao.getDailyPostId(reply.getBoard(), reply.getDailyKey())), u_id, reply.getBoard())==0)
+			return false;
+		return true;
 	}
 
 }

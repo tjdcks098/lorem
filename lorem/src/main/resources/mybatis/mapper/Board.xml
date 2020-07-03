@@ -3,6 +3,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.lorem.ipsum.dao.BoardDao">
+	<select id="hasDailyPost" resultType="int">
+		select count(*)
+		from reply
+		where b_name=#{b_name} and u_id= #{u_id} and p_id = #{p_id}
+	</select>
 	<insert id="addDailyPost">
 		insert into reply(p_id, u_id, b_name, contents) 
 		values(#{p_id},#{u_id},#{b_name},#{content} )
@@ -12,7 +17,7 @@
 		call newpost(#{d_key},'admin', #{b_name},#{p_id, mode=OUT, jdbcType=NUMERIC })
 	}
 	</insert>
-	<select id="getDailyPostId" resultType="_int">
+	<select id="getDailyPostId" resultType="string">
 		select max(p_id)
 		from post_info
 		where b_name=#{b_name} and p_title=#{d_key}

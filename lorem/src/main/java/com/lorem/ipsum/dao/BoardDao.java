@@ -11,9 +11,10 @@ import com.lorem.ipsum.model.dailyReply;
 @Repository
 @Mapper
 public interface BoardDao {
+	int hasDailyPost(int p_id, String u_id, String b_name);
 	void addDailyPost(int p_id, String u_id, String b_name, String content);
 	BoardModel getBoardInf(String name);
 	ArrayList<BoardModel> getBoardList();
-	int getDailyPostId(String b_name, String d_key);
+	String getDailyPostId(String b_name, String d_key);
 	void setDailyPostId(String b_name, String d_key, String p_id);
 }
