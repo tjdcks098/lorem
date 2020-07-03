@@ -313,7 +313,7 @@ public class PostController {
 		mv.addObject("postFile", postContentsService.getFiles(p_id, b_name));
 		mv.addObject("replyList", replyService.getPostReplies(Integer.valueOf(p_id), b_name));
 
-		mv.setView(new RedirectView("../board/post"));
+		mv.setView(new RedirectView("../post"));
 		return mv;
 	}
 

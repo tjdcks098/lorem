@@ -54,10 +54,10 @@ String likeStyle = "";
 String likeUrl = "";
 String like = (String) request.getAttribute("like");
 if (like == null || like.equals("false")) {
-	likeUrl = "../post/like.do?&name=" + boardName + "&postId=" + postInfo.getP_id();
+	likeUrl = commons.baseUrl+"post/like.do?&name=" + boardName + "&postId=" + postInfo.getP_id();
 	likeStyle = "<a onclick='like()' id=\"like_this\" style=\'background-color: rgba(0, 0, 0, 0);\'>좋아요</a>";
 } else {
-	likeUrl = "../post/like.undo?&name=" + boardName + "&postId=" + postInfo.getP_id();
+	likeUrl = commons.baseUrl+"post/like.undo?&name=" + boardName + "&postId=" + postInfo.getP_id();
 	likeStyle = "<a onclick='like()' id=\"like_this\" style=\'background-color: rgba(230, 230, 230, 1);\'>좋아요 취소</a>";
 }
 %>
@@ -111,7 +111,7 @@ function likeReply(r_index){
 	val.push({name:"r_index", value:r_index});
 	$.ajax({
 		dataType:'script',
-		url:"../likeReply.do",
+		url:"<%=commons.baseUrl%>post/likeReply.do",
 		data:val,
         type : "POST",
         success: function(){},
@@ -125,7 +125,7 @@ function undo(r_index){
 	val.push({name:"r_index", value:r_index});
 	$.ajax({
 		dataType:'script',
-		url:"../likeReply.undo",
+		url:"<%=commons.baseUrl%>post/likeReply.undo",
 		data:val,
         type : "POST",
         success: function(){},

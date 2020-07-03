@@ -59,9 +59,9 @@ ArrayList<ReplyModel> postList=(ArrayList<ReplyModel>)request.getAttribute("post
 						}else{
 							html+="<div class='dailyPost'>";
 						}
-						html+="<p style='font-weight:bold; font-size:0.8em;'>"
+						html+="<p style='font-size:0.8em;'>"
 							+postList[i]['u_nick']+"("
-							+postList[i]['u_id']+")<span style='font-weight:normal; color:#909090; float:right;'>"
+							+postList[i]['u_id']+")<span style='color:#909090; float:right;'>"
 							+postList[i]['date']+"</span></p><p>"
 							+postList[i]['content']+"</p></div>";
 						
