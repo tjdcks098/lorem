@@ -13,4 +13,5 @@ public class ReplyModel {
 	int r_index;
 	String b_name;
 	String p_id;
+	String p_title;
 }

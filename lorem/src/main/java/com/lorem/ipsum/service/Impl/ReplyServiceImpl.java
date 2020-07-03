@@ -1,6 +1,7 @@
 package com.lorem.ipsum.service.Impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,5 +73,18 @@ public class ReplyServiceImpl implements ReplyService {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public ArrayList<ReplyModel> getRecentlyAdded() {
+		Date td= new Date();
+		td.setHours(td.getHours() - 6);
+		String tdate = (td.getYear() - 100) + "/"
+				+ (td.getMonth() >= 9 ? (td.getMonth() + 1) : "0" + (td.getMonth() + 1)) + "/"
+				+ (td.getDate() >= 9 ? td.getDate() : "0" + td.getDate()) + " "
+				+ (td.getHours() < 10 ? "0" + td.getHours() : td.getHours()) + ":"
+				+ (td.getMinutes() < 10 ? "0" + td.getMinutes() : td.getMinutes()) + ":"
+				+ (td.getSeconds() < 10 ? "0" + td.getSeconds() : td.getSeconds());
+		return replyDao.getRecentlyAdded(tdate);
 	}
 }

@@ -64,7 +64,7 @@ body {
 }
 
 .contents {
-	display: inline-table;
+	margin-left:190px;
 	width: calc(100% - 240px);
 	height: fit-content;
 	padding: 0 0 0 30px;

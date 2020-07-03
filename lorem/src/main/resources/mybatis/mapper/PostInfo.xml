@@ -4,16 +4,25 @@
 
 
 <mapper namespace="com.lorem.ipsum.dao.PostInfoDao">
-	<select id="getMyPost" resultType="com.lorem.ipsum.model.post.PostInfoModel">
+
+	<select id="getRecentlyAdded"
+		resultType="com.lorem.ipsum.model.post.PostInfoModel">
+
+		select * from post_info p, board b, acc_pub a
+		where p.b_name= b.b_name and b.b_type!='Daily' and p_date>#{tdate} and p.u_id= a.u_id
+		order by p_date desc
+	</select>
+	<select id="getMyPost"
+		resultType="com.lorem.ipsum.model.post.PostInfoModel">
 		select
-			p_title
-		,	p_view
-		,	p_lock
-		,	p_date
-		,	p_id
-		,	p_update
-		,	p_like
-		,	b_name
+		p_title
+		, p_view
+		, p_lock
+		, p_date
+		, p_id
+		, p_update
+		, p_like
+		, b_name
 		from post_info
 		where u_id=#{u_id}
 	</select>
@@ -28,80 +37,82 @@
 		,#{title}
 		)
 		}
-	
+
 	</update>
 
 
 	<insert id="delPost">
-	{
+		{
 		call del_post(
 		#{u_id}
 		,#{p_id}
 		,#{b_name}
 		)
-		
-	}
+
+		}
 	</insert>
-	<insert id="addView"
-		statementType="CALLABLE">
+	<insert id="addView" statementType="CALLABLE">
 		{
 		call VIEW_COUNT(
-			#{p_id}
+		#{p_id}
 		, #{b_name}
 		)
 		}
 	</insert>
-	<insert id="addLike"
-		statementType="CALLABLE">
+	<insert id="addLike" statementType="CALLABLE">
 		{
 		call LIKE_PROC(
 		#{u_id}
-		, #{p_id}
+		,
+		#{p_id}
 		, #{b_name}
 		)
 		}
 	</insert>
-	<insert id="subLike"
-		statementType="CALLABLE">
+	<insert id="subLike" statementType="CALLABLE">
 		{
 		call UNLIKE_PROC(
 		#{u_id}
-		, #{p_id}
+		,
+		#{p_id}
 		, #{b_name}
 		)
 		}
 	</insert>
 	<select id="getPostCount" resultType="string">
 		select
-			count(*)
+		count(*)
 		from post_info
 		where b_name = #{b_name}
 	</select>
-	 
-	<insert id="getPostInfo" parameterType="com.lorem.ipsum.model.post.PostInfoModel" statementType="CALLABLE">
+
+	<insert id="getPostInfo"
+		parameterType="com.lorem.ipsum.model.post.PostInfoModel"
+		statementType="CALLABLE">
 		{
 		call getPostInfo(
-			#{p_title, mode=OUT, jdbcType=VARCHAR}
-			,#{p_view, mode=OUT, jdbcType=VARCHAR}
-			,#{u_id, mode=OUT, jdbcType=VARCHAR}
-			,#{ u_nick, mode=OUT, jdbcType=VARCHAR}
-			,#{ p_date, mode=OUT, jdbcType=VARCHAR}
-			,#{ p_id, mode=IN, jdbcType=NUMERIC}
-			,#{ p_update, mode=OUT, jdbcType=VARCHAR}
-			,#{ p_like, mode=OUT, jdbcType=VARCHAR}
-			,#{ b_name, mode=IN, jdbcType=VARCHAR}
-			,#{ hasNext, mode=OUT, jdbcType=VARCHAR }
-			,#{ hasPrev, mode=OUT, jdbcType=VARCHAR }
-			
+		#{p_title, mode=OUT, jdbcType=VARCHAR}
+		,#{p_view, mode=OUT, jdbcType=VARCHAR}
+		,#{u_id, mode=OUT, jdbcType=VARCHAR}
+		,#{ u_nick, mode=OUT, jdbcType=VARCHAR}
+		,#{ p_date, mode=OUT, jdbcType=VARCHAR}
+		,#{ p_id, mode=IN, jdbcType=NUMERIC}
+		,#{ p_update, mode=OUT, jdbcType=VARCHAR}
+		,#{ p_like, mode=OUT, jdbcType=VARCHAR}
+		,#{ b_name, mode=IN, jdbcType=VARCHAR}
+		,#{ hasNext, mode=OUT, jdbcType=VARCHAR }
+		,#{ hasPrev, mode=OUT, jdbcType=VARCHAR }
+
 		)
-		
+
 		}
 	</insert>
-	
-	<select id="getPostList" resultType="com.lorem.ipsum.model.post.PostInfoModel">
-	select *
-	from
-	(
+
+	<select id="getPostList"
+		resultType="com.lorem.ipsum.model.post.PostInfoModel">
+		select *
+		from
+		(
 		select
 		p_title
 		, p_view
@@ -114,20 +125,25 @@
 		, p_like
 		,b_name
 		from post_info p, acc_pub a
-		where b_name=#{b_name} and a.u_id=p.u_id
+		where b_name=#{b_name} and
+		a.u_id=p.u_id
 		order by p_id desc
-	)
+		)
 	<![CDATA[where rownum >= (#{pageNum}-1)*20 and rownum < (#{pageNum})*20 ]]>
 	</select>
-	<select id="newPost" parameterType="com.lorem.ipsum.model.post.PostInfoModel" resultType="com.lorem.ipsum.model.post.PostInfoModel" statementType="CALLABLE">
-	{
+	<select id="newPost"
+		parameterType="com.lorem.ipsum.model.post.PostInfoModel"
+		resultType="com.lorem.ipsum.model.post.PostInfoModel"
+		statementType="CALLABLE">
+		{
 		call newpost(
 		#{p_title},
 		#{u_id},
 		#{b_name},
-		#{p_id, mode=INOUT, jdbcType=INTEGER }
+		#{p_id, mode=INOUT,
+		jdbcType=INTEGER }
 		)
-	}
+		}
 	</select>
 </mapper>
 

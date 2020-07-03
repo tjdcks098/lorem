@@ -10,6 +10,7 @@ import com.lorem.ipsum.model.post.PostInfoModel;
 @Repository
 @Mapper
 public interface PostInfoDao {
+	ArrayList<PostInfoModel> getRecentlyAdded(String tdate);
 	ArrayList<PostInfoModel> getMyPost(String u_id);
 	void editPost(String b_name, int p_id, String title);
 	String getPostCount(String b_name);

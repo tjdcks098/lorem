@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.lorem.ipsum.model.post.PostInfoModel;
 
 public interface PostInfoService {
+	ArrayList<PostInfoModel> getRecentlyAdded();
 	ArrayList<PostInfoModel> getMyPost(String u_id);
 	boolean editPost(String b_name, String p_id, String title);
 	String getPostCount(String b_name);

@@ -5,6 +5,12 @@
 
 
 <mapper namespace="com.lorem.ipsum.dao.ReplyDao">
+<select id="getRecentlyAdded" resultType="com.lorem.ipsum.model.post.ReplyModel">
+	select r.u_id, u_nick, contents, r_date, r.b_name, p_title, r.p_id, r_index
+	from reply r, board b, acc_pub a, post_info p
+	where r_date>#{tdate} and b_type!='Daily' and r.b_name= b.b_name and r.u_id=a.u_id and r.p_id=p.p_id and r.b_name= p.b_name
+	order by r_date desc
+</select>
 	<select id="getMyReply" resultType="com.lorem.ipsum.model.post.ReplyModel">
 		select
 			contents

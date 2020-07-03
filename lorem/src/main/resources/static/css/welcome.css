@@ -1,11 +1,26 @@
 @charset "UTF-8";
-
+#recentlyAdded{
+	border-bottom: 2px solid #606060;
+	margin-bottom: 15px;
+	}
 h1 {
 	transition: all .5s;
 }
-
+.up{
+	padding-top:5px;
+	border-top: 1px solid #606060;
+}
+.contents a:hover{
+	text-decoration:underline;
+	cursor: pointer;
+}
+#nr{
+	padding-top:10px;
+	border-top: 2px solid #606060;
+	
+}
 .left_menu {
-	display: inline-table;
+	float:left;
 	width: fit-content;
 	padding-bottom: 50px;
 	border-right: 3px solid #606060;
@@ -69,6 +84,7 @@ h1 {
 		transition: .5s;
 	}
 	.contents {
+		margin-left:190px;
 		padding-left: 5px;
 		width: calc(100% - 190px);
 		transition: .5s;

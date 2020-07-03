@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.lorem.ipsum.model.post.ReplyModel;
 
 public interface ReplyService{
+	ArrayList<ReplyModel> getRecentlyAdded();
 	ArrayList<ReplyModel> getMyReply(String u_id);
 	boolean unlikeReply(String b_name, String p_id, String r_index, String u_id);
 	boolean likeReply(String b_name, String p_id, String r_index, String u_id);

@@ -39,49 +39,49 @@ String u_level=(String)request.getAttribute("u_level");
 					<br>
 					<br>
 					<div id="pubInf" class="dashedCon">
-						<table class="paddingTable">
+						<table class="paddingTable" style=" width:100%">
 							<tr>
 								<td colspan="2" style="text-align: center;"><h3>가입정보</h3></td>
 							</tr>
 							<tr>
-								<td>아이디</td>
+								<th>아이디</th>
 								<td><%=u_id.substring(0,3)+"***"%></td>
 							</tr>
 							<tr>
-								<td>닉네임</td>
+								<th>닉네임</th>
 								<td><%=u_nick%></td>
 							</tr>
 							<tr>
-								<td>이메일</td>
+								<th>이메일</th>
 								<td><%=u_email==null?"정보없음":(u_email.split("@")[0].substring(0,3)+"*****@"+u_email.split("@")[1])%></td>
 							</tr>
 							<tr>
-								<td>전화번호</td>
+								<th>전화번호</th>
 								<td><%=u_phnum==null?"정보없음":(u_phnum.substring(0, 7)+"****")%></td>
 							</tr>
 							<tr>
-								<td>소개글</td>
+								<th>소개글</th>
 								<td><%=u_intro==null?"소개글을 작성하지 않았습니다.":u_intro%></td>
 							</tr>
 							<tr>
-								<td>이름</td>
+								<th>이름</th>
 								<td><%=u_name.substring(0, 1)+"**"%></td>
 							</tr>
 							<tr>
-								<td>생년월일</td>
+								<th>생년월일</th>
 								<td><%=u_birth==null?"정보없음":u_birth%></td>
 							</tr>
 							<tr>
-								<td>가입일</td>
+								<th>가입일</th>
 								<td><%=u_joindate==null?"정보없음":u_joindate%></td>
 							</tr>
 							<tr>
-								<td>회원등급</td>
+								<th>회원등급</th>
 								<td><%=commons.USER_LEVEL.valueOf(Integer.valueOf(u_level))+"("+u_level+"등급)"%></td>
 							</tr>
 							<tr>
 								<td><input class="roundBtn" type="button" value="정보수정" onclick="location.href='../info/edit'"></td>
-								<td></td>
+								<td><input class="roundBtn" type="button" value="회원탈퇴" style='float:right' onclick="if(confirm('정말로 탈퇴하시겠습니까?'))location.href='../info/withdrawal'"></td>
 							</tr>
 						</table>
 					</div>

@@ -1,6 +1,8 @@
 package com.lorem.ipsum.controller;
 
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -13,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.lorem.ipsum.commons;
 import com.lorem.ipsum.exception.SessionFailException;
+import com.lorem.ipsum.model.post.PostInfoModel;
+import com.lorem.ipsum.model.post.ReplyModel;
 import com.lorem.ipsum.service.BoardService;
 import com.lorem.ipsum.service.LogonService;
 import com.lorem.ipsum.service.PostContentsService;
@@ -47,6 +51,8 @@ public class HomeController {
 		}catch (SessionFailException e) {
 			mv.addObject("logonMsg", e.getMsg());
 		}
+		mv.addObject("recentPost", postInfoService.getRecentlyAdded());
+		mv.addObject("recentReply", replyService.getRecentlyAdded());
 		mv.addObject("boardList", boardService.getBoardList());
 		mv.setViewName("page/welcome");
 		commons.setAlwaysReload(response);

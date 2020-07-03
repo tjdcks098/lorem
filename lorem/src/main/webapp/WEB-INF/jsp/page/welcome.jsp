@@ -1,4 +1,6 @@
 
+<%@page import="com.lorem.ipsum.model.post.PostInfoModel"%>
+<%@page import="com.lorem.ipsum.model.post.ReplyModel"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.lorem.ipsum.model.BoardModel"%>
 <%@page import="java.net.URLEncoder"%>
@@ -7,13 +9,10 @@
 	pageEncoding="UTF-8"%>
 
 <%
-	
-
-
-
-	ArrayList<BoardModel> boardList = (ArrayList<BoardModel>) request.getAttribute("boardList");
-//System.out.println(request.getAttribute("boardList"));
-	boolean tgRain = session.getAttribute("rain") == null ? true : (boolean) session.getAttribute("rain");
+	ArrayList<PostInfoModel> recentPost = (ArrayList<PostInfoModel>) request.getAttribute("recentPost");
+ArrayList<ReplyModel> recentReply = (ArrayList<ReplyModel>) request.getAttribute("recentReply");
+ArrayList<BoardModel> boardList = (ArrayList<BoardModel>) request.getAttribute("boardList");
+boolean tgRain = session.getAttribute("rain") == null ? true : (boolean) session.getAttribute("rain");
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -28,13 +27,13 @@
 
 <script src="../js/jquery-3.5.0.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-	if(!rain){
-		$("#toggleRain").prop("checked", true);
-	}
-	
-	tgRain($("#toggleRain"));
-});
+	$(document).ready(function() {
+		if (!rain) {
+			$("#toggleRain").prop("checked", true);
+		}
+
+		tgRain($("#toggleRain"));
+	});
 </script>
 <title>Lorem Ipsum:Welcome</title>
 
@@ -62,6 +61,57 @@ $(document).ready(function(){
 				</ul>
 			</div>
 			<div class="contents">
+				<div id="recentlyAdded">
+					<h2 style='text-align: center;'>New Post</h2>
+					<br>
+					<%
+						if (recentPost == null || recentPost.size() == 0) {
+					%>
+					<p class="up"  style='text-align: center;'>새로운 글이 없습니다.</p>
+					<%
+						} else {
+						for (int i = 0; i < recentPost.size(); i++) {
+					%>
+					<p class="up"style="font-size: 0.8em;">
+						<a title="소개페이지로 이동" href="<%=commons.baseUrl%>intro?&nick=<%=recentPost.get(i).getU_nick()%>"><%=recentPost.get(i).getU_nick() + "(" + recentPost.get(i).getU_id().substring(0, 3) + "***)"%></a>
+						<span style='color: rgb(100, 100, 100); float: right;'><%=recentPost.get(i).getP_date()%></span>
+					<p style='margin-bottom: 7px;  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;'>
+						<a style="font-size:0.8em;" title="게시판으로 이동"
+							href="<%=commons.baseUrl%>board?&name=<%=URLEncoder.encode(recentPost.get(i).getB_name(), "utf-8")%>"><%=recentPost.get(i).getB_name()%></a>
+						> <a title="해당 글로 이동"
+						href="<%=commons.baseUrl%>post?&name=<%=URLEncoder.encode(recentPost.get(i).getB_name(), "utf-8")%>&postId=<%=recentPost.get(i).getP_id()%>"><%=recentPost.get(i).getP_title()%></a>
+					</p>
+					<%
+						}
+					}
+					%>
+					<h2 id="nr" style='text-align: center;'>New Reply</h2>
+					<br>
+					<%
+						if (recentReply == null || recentReply.size() == 0) {
+					%>
+					<p class="up"  style='text-align: center;'>새로운 댓글이 없습니다.</p>
+					<%
+						} else {
+						for (int i = 0; i < recentReply.size(); i++) {
+					%>
+					<p class="up" style="font-size: 0.8em;">
+						<a  title="소개페이지로 이동" href="<%=commons.baseUrl%>intro?&nick=<%=recentReply.get(i).getU_nick()%>"><%=recentReply.get(i).getU_nick() + "(" + recentReply.get(i).getU_id().substring(0, 3) + "***)"%></a>
+						<span style='color: rgb(100, 100, 100); float: right;'><%=recentReply.get(i).getR_date()%></span>
+					<p
+						style='margin-bottom: 7px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;'>
+						<a style="font-size:0.8em;" title="게시판으로 이동"
+							href="<%=commons.baseUrl%>board?&name=<%=URLEncoder.encode(recentReply.get(i).getB_name(), "utf-8")%>"><%=recentReply.get(i).getB_name()%></a>
+						> <a style="font-size:0.8em;" title="해당 글로 이동"
+						href="<%=commons.baseUrl%>post?&name=<%=URLEncoder.encode(recentReply.get(i).getB_name(), "utf-8")%>&postId=<%=recentReply.get(i).getP_id()%>"><%=recentReply.get(i).getP_title().length()>10?recentReply.get(i).getP_title().substring(0, 7)+"...":recentReply.get(i).getP_title()%></a> > 
+						<a  title="해당 댓글로 이동"
+						href="<%=commons.baseUrl%>post?&name=<%=URLEncoder.encode(recentReply.get(i).getB_name(), "utf-8")%>&postId=<%=recentReply.get(i).getP_id()%>&hl=<%=recentReply.get(i).getR_index()%>"><%=recentReply.get(i).getContents()%></a>
+					</p>
+					<%
+						}
+					}
+					%>
+				</div>
 				<h1 id="h1">What is lorem ipsum?</h1>
 				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
 					Voluptatum, animi autem. Unde nulla eos iste sequi, consequatur

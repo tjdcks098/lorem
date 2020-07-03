@@ -11,6 +11,7 @@ import com.lorem.ipsum.model.post.ReplyModel;
 @Repository
 @Mapper
 public interface ReplyDao {
+	ArrayList<ReplyModel> getRecentlyAdded(String tdate);
 	ArrayList<ReplyModel> getMyReply(String u_id);
 	void unlikeReply(String b_name, int p_id, int r_index, String u_id);
 	void likeReply(String b_name, int p_id, int r_index, String u_id);
