@@ -105,13 +105,14 @@ public class PostInfoServiceImpl implements PostInfoService {
 	@Override
 	public ArrayList<PostInfoModel> getRecentlyAdded() {
 		Date td = new Date();
-		td.setHours(td.getHours() - 6);
+		td.setHours(td.getHours() - 200);
 		String tdate = (td.getYear() - 100) + "/"
 				+ (td.getMonth() >= 9 ? (td.getMonth() + 1) : "0" + (td.getMonth() + 1)) + "/"
 				+ (td.getDate() >= 9 ? td.getDate() : "0" + td.getDate()) + " "
 				+ (td.getHours() < 10 ? "0" + td.getHours() : td.getHours()) + ":"
 				+ (td.getMinutes() < 10 ? "0" + td.getMinutes() : td.getMinutes()) + ":"
 				+ (td.getSeconds() < 10 ? "0" + td.getSeconds() : td.getSeconds());
+		System.out.println(tdate);
 		return postInfoDao.getRecentlyAdded(tdate);
 	}
 
