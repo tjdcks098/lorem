@@ -66,7 +66,7 @@ public class InfoController {
 			mv.addObject("u_intro", user.getU_intro());
 			mv.addObject("u_nick", user.getU_nick());
 			mv.addObject("u_phnum", user.getU_phnum());
-			mv.setViewName("page/editInfo");
+			mv.setViewName("page/account/editInfo");
 		} catch (SessionFailException e) {
 			if (e.getCode() == SessionFailException.UNKNOWN_EXCEPTION
 					|| e.getCode() == SessionFailException.INVALID_SESSION) {
@@ -95,7 +95,7 @@ public class InfoController {
 			mv.addObject("u_name", user.getU_name());
 			mv.addObject("u_nick", user.getU_nick());
 			mv.addObject("u_phnum", user.getU_phnum());
-			mv.setViewName("page/info");
+			mv.setViewName("page/account/info");
 		} catch (SessionFailException e) {
 			if (e.getCode() == SessionFailException.UNKNOWN_EXCEPTION
 					|| e.getCode() == SessionFailException.INVALID_SESSION) {

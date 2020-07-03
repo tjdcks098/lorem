@@ -13,10 +13,10 @@
 		,	r_lock
 		,	r_like
 		,	r_index
-		,	b_name
+		,	r.b_name
 		,	p_id
-		from reply
-		where u_id=#{u_id}
+		from reply r, board b
+		where u_id=#{u_id} and r.b_name=b.b_name and b.b_type!='Daily'
 	</select>
 
 	<insert id="likeReply">

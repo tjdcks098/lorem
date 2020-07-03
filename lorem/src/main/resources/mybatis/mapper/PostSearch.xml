@@ -14,8 +14,8 @@
 			i.u_id,
 			u_nick,
 			p_date
-		from post_info i, post_contents c, acc_pub p
-		where i.u_id=p.u_id and i.b_name=c.b_name and i.p_id=c.p_id and (regexp_like(p_contents, #{keywords},'i') or regexp_like(p_title, #{keywords},'i'))
+		from post_info i, post_contents c, acc_pub p, board b
+		where i.b_name=b.b_name and b.b_type!='Daily' and i.u_id=p.u_id and i.b_name=c.b_name and i.p_id=c.p_id and (regexp_like(p_contents, #{keywords},'i') or regexp_like(p_title, #{keywords},'i'))
 	</select>
 		<select id="searchByT" resultType="com.lorem.ipsum.model.post.PostSearchModel">
 		select 
@@ -26,8 +26,8 @@
 			i.u_id,
 			u_nick,
 			p_date
-		from post_info i, post_contents c, acc_pub p
-		where i.u_id=p.u_id and i.b_name=c.b_name and i.p_id=c.p_id and regexp_like(p_title, #{keywords},'i')
+		from post_info i, post_contents c, acc_pub p, board b
+		where i.b_name=b.b_name and b.b_type!='Daily' and i.u_id=p.u_id and i.b_name=c.b_name and i.p_id=c.p_id and regexp_like(p_title, #{keywords},'i')
 	</select>
 		<select id="searchByC" resultType="com.lorem.ipsum.model.post.PostSearchModel">
 		select 
@@ -50,7 +50,7 @@
 			i.u_id,
 			u_nick,
 			p_date
-		from post_info i, post_contents c, acc_pub p
-		where i.u_id=p.u_id and i.b_name=c.b_name and i.p_id=c.p_id and regexp_like(u_nick, #{keywords},'i')
+		from post_info i, post_contents c, acc_pub p, board b
+		where i.b_name=b.b_name and b.b_type!='Daily' and i.u_id=p.u_id and i.b_name=c.b_name and i.p_id=c.p_id and regexp_like(u_nick, #{keywords},'i')
 	</select>
 </mapper>

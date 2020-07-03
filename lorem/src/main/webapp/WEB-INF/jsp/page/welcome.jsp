@@ -41,9 +41,9 @@ $(document).ready(function(){
 </head>
 <body>
 	<div id="top"></div>
-	<%@include file="../part/topMenu.jspf"%>
-	<%@include file="../part/sideMenu.jspf"%>
-	<%@include file="../part/firstView.jspf"%>
+	<%@include file="/WEB-INF/jsp/part/topMenu.jspf"%>
+	<%@include file="/WEB-INF/jsp/part/sideMenu.jspf"%>
+	<%@include file="/WEB-INF/jsp/part/firstView.jspf"%>
 	<div id="main">
 		<div id="main_contents">
 			<div class="left_menu">

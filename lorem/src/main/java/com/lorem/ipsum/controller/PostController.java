@@ -64,7 +64,7 @@ public class PostController {
 
 	ModelAndView mv = new ModelAndView();
 
-	@RequestMapping("/likeReply.{type}")
+	@RequestMapping("/post/likeReply.{type}")
 	public String likeReply(HttpSession session, HttpServletRequest request, @PathVariable String type) {
 		try {
 			commons.logonCheck(session, logonService);

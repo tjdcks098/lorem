@@ -31,8 +31,8 @@ String u_level=(String)request.getAttribute("u_level");
 </head>
 <body>
 	<div id="top"></div>
-		<%@include file="../part/topMenu.jspf"%>
-		<%@include file="../part/sideMenu.jspf"%>
+		<%@include file="/WEB-INF/jsp/part/topMenu.jspf"%>
+		<%@include file="/WEB-INF/jsp/part/sideMenu.jspf"%>
 	<div class="main">
 		<div id="contents">
 			<div class="topspace"></div>

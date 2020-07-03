@@ -18,11 +18,20 @@ SimpleDateFormat df= new SimpleDateFormat("yyyy년 MM월");
 ArrayList<ReplyModel> postList=(ArrayList<ReplyModel>)request.getAttribute("postList");
 %>
 <style>
+.ctrBtn{
+	display:inline-block;
+	background-color: rgb(250,250,250);
+	border-radius: 8px;
+	cursor: pointer;
+	padding:1px 10px;
+	margin:10px 20px;
+}
 .overDate {
 	color: gray;
 	margin: 0 5px;
 }
 .dailyPost{
+	word-break:break-all;
 	padding:5px;
 	border-bottom:1px #606060 dashed;
 }
@@ -50,9 +59,20 @@ ArrayList<ReplyModel> postList=(ArrayList<ReplyModel>)request.getAttribute("post
 			<%}%>
 			postCount=postList.length;
 			currPage=0;
+			function prv(){
+				currPage-=1;
+				showDailyPost();
+			}
+			function next(){
+				currPage+=1;
+				showDailyPost();
+			}
 			function showDailyPost(){
 				html="";
-				if(postCount<10){
+				if(postCount==0){
+					html+="<div style='padding:50px 0; text-align:center; vertical-align:middle; font-size:1.3em;'>게시글이 없습니다</div>";
+				}
+				else if(postCount<10){
 					for(i=0; i<postCount; i++){
 						if(postList[i]['u_nick']=="<%=u_nick%>"){
 							html+="<div class='dailyPost myDP'>";
@@ -65,6 +85,32 @@ ArrayList<ReplyModel> postList=(ArrayList<ReplyModel>)request.getAttribute("post
 							+postList[i]['date']+"</span></p><p>"
 							+postList[i]['content']+"</p></div>";
 						
+					}
+				}else{
+					for(i=currPage*10; i<((currPage+1)*10>postCount?postCount:(currPage+1)*10); i++){
+						if(postList[i]['u_nick']=="<%=u_nick%>"){
+							html+="<div class='dailyPost myDP'>";
+						}else{
+							html+="<div class='dailyPost'>";
+						}
+						html+="<p style='font-size:0.8em;'>"
+							+postList[i]['u_nick']+"("
+							+postList[i]['u_id']+")<span style='color:#909090; float:right;'>"
+							+postList[i]['date']+"</span></p><p>"
+							+postList[i]['content']+"</p></div>";
+					}
+					if(currPage==0){
+						$('.contentsPage').html(
+								"<div class='ctrBtn' style='display:none;' onclick='prv()'>◀이전</div><div class='ctrBtn' onclick='next()'>다음▶</div>"
+								);
+					}else if(currPage-postCount/10>-1){
+						$('.contentsPage').html(
+								"<div class='ctrBtn' onclick='prv()'>◀이전</div><div class='ctrBtn' style='display:none' onclick='next()'>다음▶</div>"
+								);
+					}else{
+						$('.contentsPage').html(
+								"<div class='ctrBtn' onclick='prv()'>◀이전</div><div class='ctrBtn' onclick='next()'>다음▶</div>"
+								);
 					}
 				}
 
@@ -153,8 +199,6 @@ ArrayList<ReplyModel> postList=(ArrayList<ReplyModel>)request.getAttribute("post
 	<%
 		}
 	%>
-	<div class="contentsPage">
-		
-	
+	<div class="contentsPage" style="text-align: center;">
 	</div>
 </div>
