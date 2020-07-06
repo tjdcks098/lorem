@@ -23,7 +23,7 @@ String u_intro = (String) request.getAttribute("u_intro");
 
 <script>
 function sm(){
-	if($("#u_nick").val()=='<%=u_nick%>'&&$('#nkck').val()=="false"){
+	if($("#u_nick").val()!='<%=u_nick%>'&&$('#nkck').val()=="false"){
 		alert("닉네임 중복 확인을 해 주세요.");
 		return false;
 	}else if($('#u_email').val().match(/.+@.+\..+/)==null){
@@ -75,7 +75,11 @@ function fnkck(){
 		alert("닉네임에 공백문자는 포함 될 수 없습니다.");
 		return;
 		}
-
+	if($("#u_nick").val()=='<%=u_nick%>'){
+		alert("변경할 닉네임을 입력해 주세요.");
+		$("#u_nick").select();
+		return;
+		}
 	$.ajax({
 		type:"POST",
 		dataType:"text",

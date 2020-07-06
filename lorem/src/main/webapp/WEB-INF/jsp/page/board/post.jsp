@@ -85,7 +85,7 @@ if (msg != null) {%>
 	
 	<%}
 if (view!=null&&view.equals("new")) {%>
-		history.replaceState({}, null, <%="\'" + commons.baseUrl%>post?&name=<%=URLEncoder.encode(boardName, "utf-8")%>&postId=<%=postInfo.getP_id() + "\'"%>
+		history.replaceState({}, null, <%="\'" + commons.baseUrl%>post?&name=<%=URLEncoder.encode(boardName, "utf-8")%><%=highlight!=null?"&hl="+highlight:""%>&postId=<%=postInfo.getP_id() + "\'"%>
 	);
 	history.go(0);
 <%}else if(view!=null&&view.equals("search")){

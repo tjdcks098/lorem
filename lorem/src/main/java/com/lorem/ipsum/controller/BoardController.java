@@ -132,7 +132,6 @@ public class BoardController {
 			html+="location.href='../login';}";
 			return html;
 		}
-		System.out.println(reply.getBoard()+"  "+reply.getContent()+"  "+reply.getDailyKey());
 		if(reply==null)return "alert('전송중 오류가 발생했습니다.')";
 		if(boardService.getDailyPostId(reply.getBoard(), String.valueOf(reply.getDailyKey()))==null) {
 			boardService.setDailyPostId(reply.getBoard(),  String.valueOf(reply.getDailyKey()));

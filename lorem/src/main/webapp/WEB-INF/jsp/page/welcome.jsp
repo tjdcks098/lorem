@@ -67,7 +67,7 @@ boolean tgRain = session.getAttribute("rain") == null ? true : (boolean) session
 					<%
 						if (recentPost == null || recentPost.size() == 0) {
 					%>
-					<p class="up"  style='text-align: center;'>새로운 글이 없습니다.</p>
+					<p class="up nop"  style='text-align: center;'>새로운 글이 없습니다.</p>
 					<%
 						} else {
 						for (int i = 0; i < recentPost.size(); i++) {
@@ -79,7 +79,7 @@ boolean tgRain = session.getAttribute("rain") == null ? true : (boolean) session
 						<a style="font-size:0.8em;" title="게시판으로 이동"
 							href="<%=commons.baseUrl%>board?&name=<%=URLEncoder.encode(recentPost.get(i).getB_name(), "utf-8")%>"><%=recentPost.get(i).getB_name()%></a>
 						> <a title="해당 글로 이동"
-						href="<%=commons.baseUrl%>post?&name=<%=URLEncoder.encode(recentPost.get(i).getB_name(), "utf-8")%>&postId=<%=recentPost.get(i).getP_id()%>"><%=recentPost.get(i).getP_title()%></a>
+						href="<%=commons.baseUrl%>post?&name=<%=URLEncoder.encode(recentPost.get(i).getB_name(), "utf-8")%>&postId=<%=recentPost.get(i).getP_id()%>&view=new"><%=recentPost.get(i).getP_title()%></a>
 					</p>
 					<%
 						}
@@ -90,7 +90,7 @@ boolean tgRain = session.getAttribute("rain") == null ? true : (boolean) session
 					<%
 						if (recentReply == null || recentReply.size() == 0) {
 					%>
-					<p class="up"  style='text-align: center;'>새로운 댓글이 없습니다.</p>
+					<p class="up nop"  style='text-align: center;'>새로운 댓글이 없습니다.</p>
 					<%
 						} else {
 						for (int i = 0; i < recentReply.size(); i++) {
@@ -103,9 +103,9 @@ boolean tgRain = session.getAttribute("rain") == null ? true : (boolean) session
 						<a style="font-size:0.8em;" title="게시판으로 이동"
 							href="<%=commons.baseUrl%>board?&name=<%=URLEncoder.encode(recentReply.get(i).getB_name(), "utf-8")%>"><%=recentReply.get(i).getB_name()%></a>
 						> <a style="font-size:0.8em;" title="해당 글로 이동"
-						href="<%=commons.baseUrl%>post?&name=<%=URLEncoder.encode(recentReply.get(i).getB_name(), "utf-8")%>&postId=<%=recentReply.get(i).getP_id()%>"><%=recentReply.get(i).getP_title().length()>10?recentReply.get(i).getP_title().substring(0, 7)+"...":recentReply.get(i).getP_title()%></a> > 
+						href="<%=commons.baseUrl%>post?&name=<%=URLEncoder.encode(recentReply.get(i).getB_name(), "utf-8")%>&postId=<%=recentReply.get(i).getP_id()%>&view=new"><%=recentReply.get(i).getP_title().length()>10?recentReply.get(i).getP_title().substring(0, 7)+"...":recentReply.get(i).getP_title()%></a> > 
 						<a  title="해당 댓글로 이동"
-						href="<%=commons.baseUrl%>post?&name=<%=URLEncoder.encode(recentReply.get(i).getB_name(), "utf-8")%>&postId=<%=recentReply.get(i).getP_id()%>&hl=<%=recentReply.get(i).getR_index()%>"><%=recentReply.get(i).getContents()%></a>
+						href="<%=commons.baseUrl%>post?&name=<%=URLEncoder.encode(recentReply.get(i).getB_name(), "utf-8")%>&postId=<%=recentReply.get(i).getP_id()%>&view=new&hl=<%=recentReply.get(i).getR_index()%>"><%=recentReply.get(i).getContents()%></a>
 					</p>
 					<%
 						}

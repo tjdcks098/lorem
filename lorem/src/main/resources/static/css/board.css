@@ -229,7 +229,7 @@ display:none;
 	font-size: 0.8em;
 }
 
-#contentsPage {
+.contentsPage {
 	height: 26px;
 	width: 100%;
 	text-align: center;
@@ -324,7 +324,7 @@ display:none;
 		height: fit-content;
 		padding-bottom: 10px;
 	}
-	#contentsPage {
+	.contentsPage {
 		position: static;
 		margin-top: 10px;
 		width: 100%;

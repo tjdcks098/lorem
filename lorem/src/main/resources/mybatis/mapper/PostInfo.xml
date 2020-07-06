@@ -114,7 +114,8 @@
 		from
 		(
 		select
-		p_title
+		ROW_NUMBER() OVER ( ORDER BY p_id desc) as rn
+		, p_title
 		, p_view
 		, p_lock
 		, p.u_id
@@ -127,9 +128,8 @@
 		from post_info p, acc_pub a
 		where b_name=#{b_name} and
 		a.u_id=p.u_id
-		order by p_id desc
 		)
-	<![CDATA[where rownum >= (#{pageNum}-1)*20 and rownum < (#{pageNum})*20 ]]>
+	<![CDATA[where rn > (#{pageNum}-1)*10 and rn <= #{pageNum}*10 ]]>
 	</select>
 	<select id="newPost"
 		parameterType="com.lorem.ipsum.model.post.PostInfoModel"

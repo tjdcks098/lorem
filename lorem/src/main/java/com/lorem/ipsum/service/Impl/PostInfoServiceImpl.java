@@ -41,6 +41,7 @@ public class PostInfoServiceImpl implements PostInfoService {
 	@Override
 	public ArrayList<PostInfoModel> getPostList(String b_name, int pageNum) {
 		ArrayList<PostInfoModel> plist = postInfoDao.getPostList(b_name, pageNum);
+		System.out.println(plist.size());
 		for (PostInfoModel p : plist) {
 			p.setHasClip(postContentsDao.hasClip(p.getP_id(), p.getB_name()));
 			p.setHasImg(postContentsDao.hasImg(p.getP_id(), p.getB_name()));
@@ -112,7 +113,6 @@ public class PostInfoServiceImpl implements PostInfoService {
 				+ (td.getHours() < 10 ? "0" + td.getHours() : td.getHours()) + ":"
 				+ (td.getMinutes() < 10 ? "0" + td.getMinutes() : td.getMinutes()) + ":"
 				+ (td.getSeconds() < 10 ? "0" + td.getSeconds() : td.getSeconds());
-		System.out.println(tdate);
 		return postInfoDao.getRecentlyAdded(tdate);
 	}
 
