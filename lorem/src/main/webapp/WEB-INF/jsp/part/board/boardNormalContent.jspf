@@ -80,7 +80,7 @@
 				<%
 					}
 				%>
-				<p><%=postList.get(i).getP_date()%></p>
+				<p style="float:right;"><%=postList.get(i).getP_date()%></p>
 			</div>
 		</div>
 
