@@ -30,6 +30,9 @@ ArrayList<ReplyModel> postList=(ArrayList<ReplyModel>)request.getAttribute("post
 	color: gray;
 	margin: 0 5px;
 }
+.dateList a{
+white-space:nowrap;
+}
 .dailyPost{
 	word-break:break-all;
 	padding:5px;
@@ -131,21 +134,30 @@ ArrayList<ReplyModel> postList=(ArrayList<ReplyModel>)request.getAttribute("post
 			$(document).ready(
 					function() {
 						showDailyPost();
+						days=["일","월","화","수","목","금","토"];
 						html = '';
 						for (i = 0; i < dateList.length; i++) {
 							if (today.getTime()<dateList[i].getTime()){
-								html += "<a class='overDate'>"
-									+ dateList[i].getDate() + "일</a>";
+								html += "<a class='overDate'"
+									+(dateList[i].getDay()==0?"style='color:rgb(230,160,160)'":"")
+									+(dateList[i].getDay()==6?"style='color:rgb(160,160,230)'":"")
+									+">"
+									+ dateList[i].getDate() + "일("+days[dateList[i].getDay()]+")</a>";
 							}
 							else if (currDate.getDate() == dateList[i].getDate()) {
-								html += "<a class='dateSel' style='font-weight:bold; text-decoration:underline;'>"
-									+ dateList[i].getDate() + "일</a>";
+								html += "<a class='dateSel' style='font-weight:bold; text-decoration:underline;"
+									+(dateList[i].getDay()==0?"color:rgb(180,0,0)":"")
+									+(dateList[i].getDay()==6?"color:rgb(0,0,180)":"")
+									+"'>"
+									+ dateList[i].getDate() + "일("+days[dateList[i].getDay()]+")</a>";
 							} else {
 								html += "<a class='dateSel' href='<%=commons.baseUrl%>board?&name=<%=boardName%>&dailyKey="
-												+ dateList[i].getTime()
-												+ "'>"
+												+ dateList[i].getTime()+"'"
+												+(dateList[i].getDay()==0?"style='color:rgb(180,0,0)'":"")
+												+(dateList[i].getDay()==6?"style='color:rgb(0,0,180)'":"")
+												+">"
 												+ dateList[i].getDate()
-												+ "일</a>";
+												+ "일("+days[dateList[i].getDay()]+")</a>";
 									}
 								}
 								$(".dateList").html(html);
@@ -175,7 +187,7 @@ ArrayList<ReplyModel> postList=(ArrayList<ReplyModel>)request.getAttribute("post
 
 		<div class="listHeader">
 			<p style="font-size: 1.8em; font-weight: 400"><%=df.format(currday)%></p>
-			<p class="dateList"></p>
+			<p class="dateList" style="word-break:break-word;"></p>
 		</div>
 		<div class="contentBox">
 		</div>

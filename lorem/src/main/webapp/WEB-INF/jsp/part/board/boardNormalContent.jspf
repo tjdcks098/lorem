@@ -91,26 +91,7 @@
 
 	</div>
 	<div id="write">
-		<%
-			if (type != null && type.equals("noContents")) {
-		%>
-		<form action="../write.do">
-			<input type="hidden" id="board" name="board"
-				value="<%=URLEncoder.encode(boardName, "utf-8")%>"><input
-				type="text" name="title"
-				style="padding: 0 5px; width: calc(100% - 90px);" class="search">
-			<input type="submit" class="search" style="padding: 0 5px"
-				value="글쓰기">
-		</form>
-		<%
-			} else {
-		%>
-		<a
-			href="<%=commons.baseUrl%>write?&name=<%=URLEncoder.encode(boardName, "utf-8")%>">글쓰기</a>
-		<%
-			}
-		%>
-
+		<a href="<%=commons.baseUrl%>write?&name=<%=URLEncoder.encode(boardName, "utf-8")%>">글쓰기</a>
 	</div>
 	<div class="contentsPage">
 		<%
