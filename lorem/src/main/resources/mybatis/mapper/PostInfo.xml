@@ -9,20 +9,20 @@
 		resultType="com.lorem.ipsum.model.post.PostInfoModel">
 		<![CDATA[
 		select * from (
-		select 
-			p_title
-		, p_view
-		, p_lock
-		, p_date
-		, p.p_id
-		, p_update
-		, p_like
-		, p.b_name
-		,u_nick
-		, p.u_id
-		 from post_info p, board b, acc_pub a
-		where p.b_name= b.b_name and b.b_type!='Daily' and p_date>#{tdate} and p.u_id= a.u_id
-		order by p_date desc
+			select 
+				p_title
+			, 	p_view
+			, 	p_lock
+			, 	p_date
+			, 	p.p_id
+			, 	p_update
+			, 	p_like
+			, 	p.b_name
+			,	u_nick
+			, 	p.u_id
+			 from post_info p, board b, acc_pub a
+			where p.b_name= b.b_name and b.b_type!='Daily' and p_date>#{tdate} and p.u_id= a.u_id
+			order by p_date desc
 		)
 		where rownum<=5 ]]>
 	</select>
