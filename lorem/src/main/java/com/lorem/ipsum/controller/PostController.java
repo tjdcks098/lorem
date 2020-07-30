@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,7 +79,6 @@ public class PostController {
 			}
 			return src;
 		}
-
 		String p_id = request.getParameter("postId");
 		String b_name = request.getParameter("name");
 		String r_index = request.getParameter("r_index");
