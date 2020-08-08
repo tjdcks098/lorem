@@ -51,8 +51,8 @@ if (errMsg == null) {
 <body>
 	<div class="main">
 
-		<%@include file="../part/topMenu.jspf"%>
-		<%@include file="../part/sideMenu.jspf"%>
+		<%@include file="/WEB-INF/jsp/part/topMenu.jspf"%>
+		<%@include file="/WEB-INF/jsp/part/sideMenu.jspf"%>
 		<div id="contents">
 			<div class="topspace"></div>
 			<div id="main_contents">

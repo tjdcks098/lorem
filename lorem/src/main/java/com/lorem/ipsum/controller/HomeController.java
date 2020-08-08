@@ -43,19 +43,7 @@ public class HomeController {
 
 	ModelAndView mv = new ModelAndView();
 
-	@RequestMapping("/carousel")
-	public ModelAndView carousel() {
-		ArrayList<String> urls=new ArrayList<String>();
-		urls.add("../source/Here_comes_rain_again.jpg");
-		urls.add("../source/rain_floor_water_wet_drops-1351257.jpg");
-		urls.add("../source/wallpapers-desktop-animated-nightwater-27313.jpg");
-		urls.add("../source/blue-universe-956981.jpg");
-		urls.add("../source/23115-sunset-above-the-clouds-1920x1080-nature-wallpaper.jpg");
-		mv.addObject("imgUrls", urls);
-		mv.setViewName("page/Carousel");
-		return mv;
-	}
-	
+
 	
 	@RequestMapping(value = { "/", "/home", "/welcome" })
 	public ModelAndView home(HttpServletRequest request, HttpSession session, HttpServletResponse response) {

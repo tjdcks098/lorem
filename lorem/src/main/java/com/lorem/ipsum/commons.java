@@ -11,7 +11,7 @@ import com.lorem.ipsum.model.logon.UserModel;
 import com.lorem.ipsum.service.LogonService;
 
 public class commons {
-	public static final String baseUrl = "http://172.30.1.21:8085/";
+	public static final String baseUrl = "../../";
 	public static final int maxFileSize = 1024 * 1024 * 1024;
 
 	public static void setAlwaysReload(HttpServletResponse response) {

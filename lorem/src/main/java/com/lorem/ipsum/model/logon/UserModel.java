@@ -8,4 +8,5 @@ public class UserModel {
 	String u_nick;
 	String u_session;
 	int u_level;
+
 }
