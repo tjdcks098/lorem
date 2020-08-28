@@ -1,7 +1,6 @@
 package com.lorem.ipsum;
 
-import java.util.ArrayList;
-import java.util.Collections;
+
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
